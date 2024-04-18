@@ -42,7 +42,7 @@ function Invoke-IonRequest {
         [Parameter(ValueFromPipeline = $true, Mandatory = $true)]
         [PSCustomObject]$Token,
         [String]$Path,
-        [String]$Body = $null,
+        $Body = $null,
         [Microsoft.PowerShell.Commands.WebRequestMethod]$Method = [Microsoft.PowerShell.Commands.WebRequestMethod]::Get
 
     )
@@ -413,7 +413,7 @@ function New-IonRecordObj {
     .Example
     # Removes a Record from a Zone.
     $Rec = New-IonRecordObj -ZoneName "Contoso.com" -Name "App.Contoso.com" -Content 192.168.2.7
-    $Rec | ConvertTo-JsonList
+    $Rec | ConvertTo-JsonList3
 #>
 function ConvertTo-JsonList {
     param (
