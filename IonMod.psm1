@@ -386,7 +386,7 @@ function New-IonRecordObj {
         [String]$Content,
         [int]$TTL = 3600,
         [int]$Prio = 0,
-        [switch]$Disabled
+        [bool]$Disabled
     )
     return [PSCustomObject]@{
         name     = $Name
