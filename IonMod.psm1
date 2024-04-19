@@ -42,29 +42,27 @@ function Invoke-IonRequest {
         [Parameter(ValueFromPipeline = $true, Mandatory = $true)]
         [PSCustomObject]$Token,
         [String]$Path,
-        $Body = $null,
+        $Body,
         [Microsoft.PowerShell.Commands.WebRequestMethod]$Method = [Microsoft.PowerShell.Commands.WebRequestMethod]::Get
 
     )
+    #$Body
     # Headers
     $headers = @{
         'X-Api-Key'    = ("{0}.{1}" -f $Token.PublicPrefix, $Token.Secret) 
         'Content-Type' = "application/json"
     }
     # No Body - no switch
-    $out = if (!($Body)) {
+    $Response = if (!($Body)) {
         (Invoke-WebRequest -Uri "$ROOTURL$Path" -Headers $headers -Method $Method)
     } 
     # Lets go body!
     else {
-        # Check if body is a PSObj
-        if (($Obj.getType()).name -eq "PSCustomObject") {
-            $Body = $Body | ConvertTo-JsonList
-        }
-        (Invoke-WebRequest -Uri "$ROOTURL$Path" -Headers $headers -Method $Method -Body $Body)
+        (Invoke-WebRequest -Uri "$ROOTURL$Path" -Headers $headers -Method $Method -Body ($Body | ConvertTo-JsonList))
     }
+    #$Response
     # Convert response into a PSObj
-    return $out.content | ConvertFrom-Json
+    return ($Response.content) | ConvertFrom-Json
 }
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 <#
@@ -128,6 +126,7 @@ function Get-IonZone {
         [PSCustomObject]$Token,
         [string]$ZoneId
     )
+    
     return (Invoke-IonRequest -Path "/zones/$ZoneId" -Token $Token)
 }
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -219,7 +218,7 @@ function Set-IonZone {
     $Token = New-IonToken -PublicPrefix "XXXX" -Secret "XXXX"
     $Token | Get-IonRecord -ZoneId "XXXX" -Types "A"
 #>
-function Get-IonRecord   {
+function Get-IonRecord {
     param (
         [Parameter(ValueFromPipeline = $true, Mandatory = $true)]
         [PSCustomObject]$Token,
