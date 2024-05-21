@@ -1,4 +1,5 @@
-﻿using System.Management.Automation;           // Windows PowerShell namespace.
+using System.Management.Automation;           // Windows PowerShell namespace.
+using Microsoft.PowerShell.Commands;
 
 // Namespace == Module
 // Each class with the [cmdlet] derivation is a powershell cmdlet
@@ -19,34 +20,33 @@ namespace IonMod
 
 
 {
-  // New-IonToken
-  [Cmdlet(VerbsCommon.New, "IonToken")]
-  public class NewIonTokenCmd : Cmdlet
-  {
-    // parameters doc:
-    // https://learn.microsoft.com/en-us/powershell/scripting/developer/cmdlet/declaring-properties-as-parameters?view=powershell-7.4
-    // https://learn.microsoft.com/en-us/powershell/scripting/developer/cmdlet/types-of-cmdlet-parameters?view=powershell-7.4
-    [Parameter(Mandatory = true)]
-    public string PublicPrefix
+    // New-IonToken
+    [Cmdlet(VerbsLifecycle.Invoke, "IonRequest")]
+    public class InvokeIonRequestCmd : Cmdlet
     {
-      get { return publicPrefix; }
-      set { publicPrefix = value; }
+        //
+        //
+        // Params
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
+        public required IonToken Token { get; set; }
+        //
+        //
+        [Parameter()]
+        public required string Path { get; set; }
+        //
+        //
+        [Parameter()]
+        public required string Body { get; set; }
+        //
+        //
+        [Parameter()]
+        public required WebRequestMethod Method { get; set; } = WebRequestMethod.Get;
+        //
+        //
+        // Logic
+        protected override void ProcessRecord()
+        {
+            WriteObject("{Path}Template");
+        }
     }
-    private string publicPrefix;
-    //
-    //
-    [Parameter(Mandatory = true)]
-    public string Secret
-    {
-      get { return secret; }
-      set { secret = value; }
-    }
-    private string secret;
-    //
-    //
-    protected override void ProcessRecord()
-    {
-      WriteObject(new IonToken(publicPrefix, secret));
-    }
-  }
 }
