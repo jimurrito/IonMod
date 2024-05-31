@@ -12,10 +12,17 @@ namespace IonMod
             ZoneId = zoneId;
             Records = JsonConvert.SerializeObject(records);
         }
-
-        public List<IonRecord>? Run()
+        //
+        // Constructor using Zone class
+        public SetIonZone(IonToken token, IonZone zone) : base(token)
         {
-            return JsonConvert.DeserializeObject<List<IonRecord>>(Put("/" + ZoneId, Records)?.ToString());
+            ZoneId = zone.Id;
+            Records = JsonConvert.SerializeObject(zone.Records);
+        }
+
+        public void Run()
+        {
+            Put("/" + ZoneId, Records);
         }
 
 

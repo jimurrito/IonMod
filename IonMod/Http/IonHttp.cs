@@ -32,7 +32,8 @@ namespace IonMod
             {
                 request = new HttpRequestMessage(method, Rooturi + path)
                 {
-                    Content = new StringContent(body, Encoding.UTF8, Contenttype)
+                    // Body must be lowered as the IONOS api is case sensitive for JSON bodies.
+                    Content = new StringContent(body.ToLower(), Encoding.UTF8, Contenttype)
                 };
             }
             // Set Headers
