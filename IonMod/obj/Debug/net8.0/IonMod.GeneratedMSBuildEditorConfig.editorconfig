@@ -16,6 +16,6 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = IonMod
-build_property.ProjectDir = C:\Users\james\Desktop\code\IonMod\IonMod\
+build_property.ProjectDir = C:\Users\james\Documents\code\IonMod\IonMod\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v8.0": {
       "IonMod/1.0.0": {
         "dependencies": {
+          "Newtonsoft.Json": "13.0.3",
           "System.Management.Automation": "7.4.2",
           "Microsoft.PowerShell.Commands.Utility": "7.4.2"
         },

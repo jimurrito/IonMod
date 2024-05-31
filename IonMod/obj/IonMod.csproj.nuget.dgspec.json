@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\james\\Desktop\\code\\IonMod\\IonMod\\IonMod.csproj": {}
+    "C:\\Users\\james\\Documents\\code\\IonMod\\IonMod\\IonMod.csproj": {}
   },
   "projects": {
-    "C:\\Users\\james\\Desktop\\code\\IonMod\\IonMod\\IonMod.csproj": {
+    "C:\\Users\\james\\Documents\\code\\IonMod\\IonMod\\IonMod.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\james\\Desktop\\code\\IonMod\\IonMod\\IonMod.csproj",
+        "projectUniqueName": "C:\\Users\\james\\Documents\\code\\IonMod\\IonMod\\IonMod.csproj",
         "projectName": "IonMod",
-        "projectPath": "C:\\Users\\james\\Desktop\\code\\IonMod\\IonMod\\IonMod.csproj",
+        "projectPath": "C:\\Users\\james\\Documents\\code\\IonMod\\IonMod\\IonMod.csproj",
         "packagesPath": "C:\\Users\\james\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\james\\Desktop\\code\\IonMod\\IonMod\\obj\\",
+        "outputPath": "C:\\Users\\james\\Documents\\code\\IonMod\\IonMod\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\james\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\james\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -43,6 +45,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "NewtonSoft.json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
             "System.Management.Automation": {
               "target": "Package",
               "version": "[7.4.2, )"
@@ -68,7 +74,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.206/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

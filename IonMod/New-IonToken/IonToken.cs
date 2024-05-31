@@ -8,8 +8,8 @@ namespace IonMod
         // Constructor
         public IonToken(string publicPrefix, string secret)
         {
-            this.PublicPrefix = publicPrefix;
-            this.Secret = secret;
+            PublicPrefix = publicPrefix;
+            Secret = secret;
         }
     }
 }

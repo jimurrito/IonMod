@@ -1,4 +1,6 @@
-﻿using System.Management.Automation;           // Windows PowerShell namespace.
+using System.Management.Automation;           // Windows PowerShell namespace.
+using System.Security.Policy;
+using Microsoft.PowerShell.Commands;
 
 // Namespace == Module
 // Each class with the [cmdlet] derivation is a powershell cmdlet
@@ -19,34 +21,32 @@ namespace IonMod
 
 
 {
-  // New-IonToken
-  [Cmdlet(VerbsCommon.New, "IonToken")]
-  public class NewIonTokenCmd : Cmdlet
-  {
-    // parameters doc:
-    // https://learn.microsoft.com/en-us/powershell/scripting/developer/cmdlet/declaring-properties-as-parameters?view=powershell-7.4
-    // https://learn.microsoft.com/en-us/powershell/scripting/developer/cmdlet/types-of-cmdlet-parameters?view=powershell-7.4
-    [Parameter(Mandatory = true)]
-    public required string PublicPrefix
+    // New-IonToken
+    [Cmdlet(VerbsCommon.Get, "IonZone")]
+    public class GetIonZoneCmd : Cmdlet
     {
-      get { return publicPrefix; }
-      set { publicPrefix = value; }
+        //
+        //
+        // Params
+        [Parameter(Mandatory = true, ValueFromPipeline = true)] //Mandatory = true, ValueFromPipeline = true
+        public required IonToken Token { get; set; }
+        //
+        [Parameter()]
+        public string? ZoneId { get; set; }
+        //
+        //
+        // Logic
+        protected override void ProcessRecord()
+        {
+            GetIonZone client = new GetIonZone(Token);
+            if (ZoneId != null)
+            {
+                WriteObject(client.Run(ZoneId));
+            }
+            else
+            {
+                WriteObject(client.Run());
+            }
+        }
     }
-    private string publicPrefix;
-    //
-    //
-    [Parameter(Mandatory = true)]
-    public required string Secret
-    {
-      get { return  secret; }
-      set { secret = value; }
-    }
-    private string secret;
-    //
-    //
-    protected override void ProcessRecord()
-    {
-      WriteObject(new IonToken(publicPrefix, secret));
-    }
-  }
 }

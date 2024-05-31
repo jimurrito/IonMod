@@ -1,4 +1,5 @@
 using System.Management.Automation;           // Windows PowerShell namespace.
+using System.Security.Policy;
 using Microsoft.PowerShell.Commands;
 
 // Namespace == Module
@@ -21,32 +22,30 @@ namespace IonMod
 
 {
     // New-IonToken
-    [Cmdlet(VerbsLifecycle.Invoke, "IonRequest")]
-    public class InvokeIonRequestCmd : Cmdlet
+    [Cmdlet(VerbsCommon.Set, "IonZone")]
+    public class SetIonZoneCmd : Cmdlet
     {
         //
         //
         // Params
-        [Parameter(Mandatory = true, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)] //Mandatory = true, ValueFromPipeline = true
         public required IonToken Token { get; set; }
         //
         //
-        [Parameter()]
-        public required string Path { get; set; }
+        [Parameter(Mandatory = true)]
+        public required string ZoneId { get; set; }
         //
         //
-        [Parameter()]
-        public required string Body { get; set; }
+        [Parameter(Mandatory = true)]
+        public required List<IonRecord> Records { get; set; }
         //
-        //
-        [Parameter()]
-        public required WebRequestMethod Method { get; set; } = WebRequestMethod.Get;
         //
         //
         // Logic
         protected override void ProcessRecord()
         {
-            WriteObject("{Path}Template");
+            SetIonZone client = new SetIonZone(Token, ZoneId, Records);
+            WriteObject(client.Run());
         }
     }
 }

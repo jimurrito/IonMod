@@ -1,6 +1,3 @@
-C:\Users\james\Documents\code\IonMod\IonMod\bin\Debug\net8.0\IonMod.deps.json
-C:\Users\james\Documents\code\IonMod\IonMod\bin\Debug\net8.0\IonMod.dll
-C:\Users\james\Documents\code\IonMod\IonMod\bin\Debug\net8.0\IonMod.pdb
 C:\Users\james\Documents\code\IonMod\IonMod\obj\Debug\net8.0\IonMod.csproj.AssemblyReference.cache
 C:\Users\james\Documents\code\IonMod\IonMod\obj\Debug\net8.0\IonMod.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\james\Documents\code\IonMod\IonMod\obj\Debug\net8.0\IonMod.AssemblyInfoInputs.cache
@@ -24,3 +21,9 @@ C:\Users\james\Desktop\code\IonMod\IonMod\obj\Debug\net8.0\IonMod.dll
 C:\Users\james\Desktop\code\IonMod\IonMod\obj\Debug\net8.0\refint\IonMod.dll
 C:\Users\james\Desktop\code\IonMod\IonMod\obj\Debug\net8.0\IonMod.pdb
 C:\Users\james\Desktop\code\IonMod\IonMod\obj\Debug\net8.0\ref\IonMod.dll
+C:\Users\james\Documents\code\IonMod\IonMod\IonMod.deps.json
+C:\Users\james\Documents\code\IonMod\IonMod\IonMod.dll
+C:\Users\james\Documents\code\IonMod\IonMod\IonMod.pdb
+C:\Users\james\Documents\code\IonMod\IonMod\bin\Debug\net8.0\IonMod.deps.json
+C:\Users\james\Documents\code\IonMod\IonMod\bin\Debug\net8.0\IonMod.dll
+C:\Users\james\Documents\code\IonMod\IonMod\bin\Debug\net8.0\IonMod.pdb

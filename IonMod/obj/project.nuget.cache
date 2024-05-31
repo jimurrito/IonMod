@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5vxeTKtQa2Q=",
+  "dgSpecHash": "3mdRet99ttVL+JQhTt91E5tV6m6wk+73bVSyaDqGPkGRUrMIaX/2m9UKCYcbbag+/YWQn6Uf4HPElWjc5goL9A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\james\\Desktop\\code\\IonMod\\IonMod\\IonMod.csproj",
+  "projectFilePath": "C:\\Users\\james\\Documents\\code\\IonMod\\IonMod\\IonMod.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\james\\.nuget\\packages\\jetbrains.annotations\\2021.2.0\\jetbrains.annotations.2021.2.0.nupkg.sha512",
     "C:\\Users\\james\\.nuget\\packages\\json.more.net\\1.9.3\\json.more.net.1.9.3.nupkg.sha512",
