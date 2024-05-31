@@ -4,9 +4,8 @@ namespace IonMod
 {
     public class GetIonZone : IonHttp
     {
-
         public GetIonZone(IonToken token) : base(token) { }
-
+        //
         /*
         Gets Zones from IONOS. This returns ALL zones under your IONOS account.
         */
@@ -14,7 +13,7 @@ namespace IonMod
         {
             return JsonConvert.DeserializeObject<List<IonZone>>(Get("/"));
         }
-
+        //
         /*
         Gets data on a specfic Zone. Returns a single Zone, and its associated records.
         */
@@ -22,6 +21,5 @@ namespace IonMod
         {
             return JsonConvert.DeserializeObject<IonZone>(Get("/" + zoneId));
         }
-
     }
 }

@@ -6,7 +6,8 @@ namespace IonMod
     {
         public string ZoneId;
         public string Records;
-
+        //
+        //
         public SetIonZone(IonToken token, string zoneId, List<IonRecord> records) : base(token)
         {
             ZoneId = zoneId;
@@ -19,12 +20,11 @@ namespace IonMod
             ZoneId = zone.Id;
             Records = JsonConvert.SerializeObject(zone.Records);
         }
-
+        //
+        //
         public void Run()
         {
             Put("/" + ZoneId, Records);
         }
-
-
     }
 }

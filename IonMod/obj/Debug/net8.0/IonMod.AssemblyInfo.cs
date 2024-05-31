@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("IonMod")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e603258499d9199b7daaa62bf34ef0bf672b953a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+68f27b3d2ab0db7f50912441236376a541a4ad58")]
 [assembly: System.Reflection.AssemblyProductAttribute("IonMod")]
 [assembly: System.Reflection.AssemblyTitleAttribute("IonMod")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
