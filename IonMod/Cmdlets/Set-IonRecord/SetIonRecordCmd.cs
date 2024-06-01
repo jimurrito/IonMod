@@ -28,20 +28,20 @@ namespace IonMod
         //
         //
         // Params
-        [Parameter(Mandatory = true, ValueFromPipeline = true)] //Mandatory = true, ValueFromPipeline = true
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public required IonToken Token { get; set; }
         //
         [Parameter(Mandatory = true)]
         public required string ZoneId { get; set; }
         //
         [Parameter(Mandatory = true)]
-        public required List<IonRecord> Records { get; set; }
+        public required IonRecord Record { get; set; }
         //
         //
         // Logic
         protected override void ProcessRecord()
         {
-            SetIonZone client = new SetIonZone(Token, ZoneId, Records);
+            SetIonRecord client = new SetIonRecord(Token, ZoneId, Record);
             client.Run();
         }
     }

@@ -44,10 +44,13 @@ namespace IonMod
             // Custom exception for non 200s
             switch (response.StatusCode)
             {
-                case HttpStatusCode.Unauthorized:
+                case HttpStatusCode.BadRequest:             //400
+                    throw new IonBadRequestException();
+                case HttpStatusCode.Unauthorized:           //401
                     throw new IonUnauthorizedException();
-                case HttpStatusCode.InternalServerError:
+                case HttpStatusCode.InternalServerError:    //500
                     throw new IonServerErrorException();
+
             }
             // Pull content from HttpResponseMessage
             StreamReader reader = new StreamReader(response.Content.ReadAsStream());
