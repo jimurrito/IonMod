@@ -1,21 +1,27 @@
-using Newtonsoft.Json;
-
 namespace IonMod
 {
     public class RmIonRecord : IonHttp
     {
         public string ZoneId;
+        public string RecordId;
         //
         //
-        public RmIonRecord(IonToken token, string zoneid) : base(token)
+        public RmIonRecord(IonToken token, string zoneid, string recordid) : base(token)
         {
             ZoneId = zoneid;
+            RecordId = recordid;
+        }
+        //
+        public RmIonRecord(IonToken token, string zoneid, IonRecord record) : base(token)
+        {
+            ZoneId = zoneid;
+            RecordId = record.Id;
         }
         //
         //
-        public IonRecord? Run(string recordid)
+        public void Run()
         {
-            return JsonConvert.DeserializeObject<IonRecord>(Get("/" + ZoneId + "/records/" + recordid));
+            Delete("/" + ZoneId + "/records/" + RecordId);
         }
     }
 }

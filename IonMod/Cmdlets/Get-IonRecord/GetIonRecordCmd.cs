@@ -23,8 +23,8 @@ namespace IonMod
         // Logic
         protected override void ProcessRecord()
         {
-            GetIonRecord client = new GetIonRecord(Token, ZoneId);
-            WriteObject(client.Run(RecordId));
+            GetIonRecord client = new GetIonRecord(Token, ZoneId, RecordId);
+            WriteObject(client.Run());
         }
     }
 }

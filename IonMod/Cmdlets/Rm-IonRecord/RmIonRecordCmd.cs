@@ -13,6 +13,9 @@ namespace IonMod
         [Parameter(Mandatory = true, ValueFromPipeline = true)] 
         public required IonToken Token { get; set; }
         //
+        [Parameter()]
+        public IonRecord? Record {get; set;}
+        //
         [Parameter(Mandatory = true)]
         public required string ZoneId { get; set; }
         //
@@ -21,10 +24,17 @@ namespace IonMod
         //
         //
         // Logic
+        protected override void BeginProcessing()
+        {
+            // override if Record obj is provided
+            if (Record != null){
+                RecordId = Record.Id;
+            }
+        }
         protected override void ProcessRecord()
         {
-            GetIonRecord client = new GetIonRecord(Token, ZoneId);
-            WriteObject(client.Run(RecordId));
+            RmIonRecord client = new RmIonRecord(Token, ZoneId, RecordId);
+            client.Run();
         }
     }
 }

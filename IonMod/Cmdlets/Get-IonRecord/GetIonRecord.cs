@@ -5,17 +5,19 @@ namespace IonMod
     public class GetIonRecord : IonHttp
     {
         public string ZoneId;
+        public string RecordId;
         //
         //
-        public GetIonRecord(IonToken token, string zoneid) : base(token)
+        public GetIonRecord(IonToken token, string zoneid, string recordid) : base(token)
         {
             ZoneId = zoneid;
+            RecordId = recordid;
         }
         //
         //
-        public IonRecord? Run(string recordid)
+        public IonRecord? Run()
         {
-            return JsonConvert.DeserializeObject<IonRecord>(Get("/" + ZoneId + "/records/" + recordid));
+            return JsonConvert.DeserializeObject<IonRecord>(Get("/" + ZoneId + "/records/" + RecordId));
         }
     }
 }
