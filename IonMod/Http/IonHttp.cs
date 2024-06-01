@@ -67,9 +67,9 @@ namespace IonMod
         {
             return Request(HttpMethod.Post, path, body);
         }
-        public string Delete(string path = "/", string body = "")
+        public string Delete(string path = "/")
         {
-            return Request(HttpMethod.Delete, path, body);
+            return Request(HttpMethod.Delete, path);
         }
     }
 }
