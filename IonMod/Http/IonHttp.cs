@@ -1,6 +1,4 @@
 using System.Text;
-using Microsoft.Management.Infrastructure.Options;
-using Newtonsoft.Json;
 using System.Net;
 
 namespace IonMod

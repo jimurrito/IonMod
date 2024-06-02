@@ -5,10 +5,10 @@ namespace IonMod
         public string Name;
         public string Id;
         public string Type;
-        public List<IonRecord?> Records;
+        public List<IonRecord?>? Records;
         //
         //
-        public IonZone(string name, string id, string type, List<IonRecord?> records = default)
+        public IonZone(string name, string id, string type, List<IonRecord?>? records = default)
         {
             Name = name;
             Id = id;

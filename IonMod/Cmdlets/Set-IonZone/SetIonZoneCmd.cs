@@ -20,7 +20,7 @@ namespace IonMod
         public required string ZoneId { get; set; }
         //
         [Parameter()]
-        public required List<IonRecord?> Records { get; set; }
+        public required List<IonRecord?>? Records { get; set; }
         //
         //
         // Logic
