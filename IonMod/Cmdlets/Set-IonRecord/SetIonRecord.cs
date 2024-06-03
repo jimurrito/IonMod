@@ -19,7 +19,7 @@ namespace IonMod
         //
         public void Run()
         {
-            Put("/" + ZoneId + "/records/" + RecordId, Record);
+            Put<IonRecord>("/" + ZoneId + "/records/" + RecordId, Record);
         }
     }
 }

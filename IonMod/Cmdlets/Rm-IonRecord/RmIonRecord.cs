@@ -21,7 +21,7 @@ namespace IonMod
         //
         public void Run()
         {
-            Delete("/" + ZoneId + "/records/" + RecordId);
+            Delete<IonRecord>("/" + ZoneId + "/records/" + RecordId);
         }
     }
 }

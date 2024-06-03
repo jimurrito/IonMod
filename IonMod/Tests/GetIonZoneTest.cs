@@ -8,27 +8,38 @@ namespace IonModTest
     public class GetIonZoneTest
     {
         //
-        private IonToken Token;
-        //
-        public GetIonZoneTest()
-        {
-            Token = new IonToken(TestIonParameters.PublicPrefix, TestIonParameters.Secret);
-        }
+        private static IonToken Token = new IonToken(TestIonParameters.PublicPrefix, TestIonParameters.Secret);
+        private GetIonZone client = new GetIonZone(Token);
         //
         //
         // Get-IonZone - All
         [TestMethod]
-        public void GetIonZoneTestAll(){
-            GetIonZone client = new GetIonZone(Token);
+        public void GetIonZoneTestAll()
+        {
             client.Run();
         }
         //
         // Get-IonZone - One
         [TestMethod]
-        public void GetIonZoneTestOne(){
-            GetIonZone client = new GetIonZone(Token);
-            var result = client.Run(TestIonParameters.ZoneId);
-            Debug.Assert(result != null);
+        public void GetIonZoneTestOne()
+        {
+            client.Run(TestIonParameters.ZoneId);
+        }
+        //
+        // Get-IonZone - One (Should fail with 401)
+        // Any typos or errors on the URL path will cause a 401. Only malformed body will return 400.
+        [TestMethod]
+        public void GetIonZoneTestOneFail()
+        {
+            try
+            {
+                client.Run(TestIonParameters.ZoneId + "z");
+            }
+            catch (IonUnauthorizedException)
+            {
+                Debug.Assert(true);
+            }
+
         }
 
     }

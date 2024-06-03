@@ -1,5 +1,3 @@
-using Newtonsoft.Json;
-
 namespace IonMod
 {
     public class GetIonRecord : IonHttp
@@ -15,9 +13,9 @@ namespace IonMod
         }
         //
         //
-        public IonRecord? Run()
+        public IonRecord Run()
         {
-            return JsonConvert.DeserializeObject<IonRecord>(Get("/" + ZoneId + "/records/" + RecordId));
+            return Get<IonRecord>("/" + ZoneId + "/records/" + RecordId);
         }
     }
 }

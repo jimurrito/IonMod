@@ -9,17 +9,17 @@ namespace IonMod
         /*
         Gets Zones from IONOS. This returns ALL zones under your IONOS account.
         */
-        public List<IonZone>? Run()
+        public List<IonZone> Run()
         {
-            return JsonConvert.DeserializeObject<List<IonZone>>(Get("/"));
+            return Get<List<IonZone>>();
         }
         //
         /*
         Gets data on a specfic Zone. Returns a single Zone, and its associated records.
         */
-        public IonZone? Run(string zoneId)
+        public IonZone Run(string zoneId)
         {
-            return JsonConvert.DeserializeObject<IonZone>(Get("/" + zoneId));
+            return Get<IonZone>("/" + zoneId);
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.Text;
 using System.Net;
+using Newtonsoft.Json;
 
 namespace IonMod
 {
@@ -20,19 +21,12 @@ namespace IonMod
         public string Request(HttpMethod method, string path = "/", string body = "")
         {
             // init request
-            HttpRequestMessage request;
+            HttpRequestMessage request = new HttpRequestMessage(method, Rooturi + path);
             // check if body needs to be injected
-            if (method == HttpMethod.Get)
+            if (method == HttpMethod.Put && method == HttpMethod.Post)
             {
-                request = new HttpRequestMessage(method, Rooturi + path);
-            }
-            else
-            {
-                request = new HttpRequestMessage(method, Rooturi + path)
-                {
-                    // Body must be lowered as the IONOS api is case sensitive for JSON bodies.
-                    Content = new StringContent(body.ToLower(), Encoding.UTF8, Contenttype)
-                };
+                // Body must be lowered as the IONOS api is case sensitive for JSON bodies.
+                request.Content = new StringContent(body.ToLower(), Encoding.UTF8, Contenttype);
             }
             // Set Headers
             request.Headers.Add("X-Api-Key", Token.PublicPrefix + "." + Token.Secret);
@@ -44,7 +38,7 @@ namespace IonMod
             {
                 case HttpStatusCode.BadRequest:             //400
                     throw new IonBadRequestException();
-                case HttpStatusCode.Unauthorized:           //401
+                case HttpStatusCode.Unauthorized:           //401 (Most common)
                     throw new IonUnauthorizedException();
                 case HttpStatusCode.InternalServerError:    //500
                     throw new IonServerErrorException();
@@ -52,25 +46,44 @@ namespace IonMod
             }
             // Pull content from HttpResponseMessage
             StreamReader reader = new StreamReader(response.Content.ReadAsStream());
-            string rend = reader.ReadToEnd();
-            //
-            return rend;
+            // return content deserialized into an Obj
+            return reader.ReadToEnd();
         }
-        public string Get(string path = "/")
+        //
+        //
+        public T Get<T>(string path = "/")
         {
-            return Request(HttpMethod.Get, path);
+            return JsonConvert.DeserializeObject<T>(Request(HttpMethod.Get, path)) ?? throw new IonDeserializationError();
         }
-        public string Put(string path = "/", string body = "")
+        //
+        //
+        public T Put<T>(string path = "/", string body = "")
         {
-            return Request(HttpMethod.Put, path, body);
+            return JsonConvert.DeserializeObject<T>(Request(HttpMethod.Put, path, body)) ?? throw new IonDeserializationError();
         }
-        public string Post(string path = "/", string body = "")
+        public void Put(string path = "/", string body = "")
         {
-            return Request(HttpMethod.Post, path, body);
+            Request(HttpMethod.Put, path, body);
         }
-        public string Delete(string path = "/")
+        //
+        //
+        public T Post<T>(string path = "/", string body = "")
         {
-            return Request(HttpMethod.Delete, path);
+            return JsonConvert.DeserializeObject<T>(Request(HttpMethod.Post, path, body)) ?? throw new IonDeserializationError();
+        }
+        public void Post(string path = "/", string body = "")
+        {
+            Request(HttpMethod.Post, path, body);
+        }
+        //
+        //
+        public T Delete<T>(string path = "/")
+        {
+            return JsonConvert.DeserializeObject<T>(Request(HttpMethod.Delete, path)) ?? throw new IonDeserializationError();
+        }
+        public void Delete(string path = "/")
+        {
+            Request(HttpMethod.Delete, path);
         }
     }
 }
