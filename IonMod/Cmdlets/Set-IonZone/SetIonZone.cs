@@ -2,29 +2,18 @@ using Newtonsoft.Json;
 
 namespace IonMod
 {
-    public class SetIonZone : IonHttp
+    public static class SetIonZone
     {
-        public string ZoneId;
-        public string Records;
         //
         //
-        public SetIonZone(IonToken token, string zoneId, List<IonRecord?>? records) : base(token)
+        public static void Run(IonZone zone)
         {
-            ZoneId = zoneId;
-            Records = JsonConvert.SerializeObject(records);
+            Run(zone.Id, zone.Records);
         }
         //
-        // Constructor using Zone class
-        public SetIonZone(IonToken token, IonZone zone) : base(token)
+        public static void Run(string zoneId, List<IonRecord> records)
         {
-            ZoneId = zone.Id;
-            Records = JsonConvert.SerializeObject(zone.Records);
-        }
-        //
-        //
-        public void Run()
-        {
-            Put("/" + ZoneId, Records);
+            IonConnect.Put("/" + zoneId, JsonConvert.SerializeObject(records));
         }
     }
 }

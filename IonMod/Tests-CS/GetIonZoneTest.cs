@@ -6,24 +6,27 @@ namespace IonModTest
 {
     [TestClass]
     public class GetIonZoneTest
-    {
-        //
-        private static IonToken Token = new IonToken(TestIonParameters.PublicPrefix, TestIonParameters.Secret);
-        private GetIonZone client = new GetIonZone(Token);
-        //
+    {   
+        // Init test with login
+        public GetIonZoneTest()
+        {
+            TestIonParameters.LoginTest();
+        }
         //
         // Get-IonZone - All
         [TestMethod]
         public void GetIonZoneTestAll()
         {
-            client.Run();
+            //TestIonParameters.LoginTest();
+            Debug.Assert(GetIonZone.Run() is List<IonZone>);
         }
         //
         // Get-IonZone - One
         [TestMethod]
         public void GetIonZoneTestOne()
         {
-            client.Run(TestIonParameters.ZoneId);
+            //TestIonParameters.LoginTest();
+            Debug.Assert(GetIonZone.Run(TestIonParameters.ZoneId) is IonZone);
         }
         //
         // Get-IonZone - One (Should fail with 401)
@@ -31,16 +34,9 @@ namespace IonModTest
         [TestMethod]
         public void GetIonZoneTestOneFail()
         {
-            try
-            {
-                client.Run(TestIonParameters.ZoneId + "z");
-            }
-            catch (IonUnauthorizedException)
-            {
-                Debug.Assert(true);
-            }
-
+            //TestIonParameters.LoginTest();
+            try { GetIonZone.Run("failure-test"); Debug.Assert(false); }
+            catch (IonUnauthorizedException) { }
         }
-
     }
 }

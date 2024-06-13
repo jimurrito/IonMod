@@ -9,32 +9,35 @@ namespace IonMod
     {
         //
         //
-        // Params
-        [Parameter(Mandatory = true, ValueFromPipeline = true)] 
-        public required IonToken Token { get; set; }
+        //
+        [Parameter(ValueFromPipeline = true)]
+        public IonZone? Zone { get; set; }
         //
         [Parameter()]
-        public IonRecord? Record {get; set;}
+        public string? ZoneId { get; set; }
+        //        
+        [Parameter()]
+        public string? RecordId { get; set; }
         //
-        [Parameter(Mandatory = true)]
-        public required string ZoneId { get; set; }
-        //
-        [Parameter(Mandatory = true)]
-        public required string RecordId { get; set; }
+        [Parameter(ValueFromPipeline = true)]
+        public IonRecord? Record { get; set; }
         //
         //
         // Logic
         protected override void BeginProcessing()
         {
-            // override if Record obj is provided
-            if (Record != null){
-                RecordId = Record.Id;
+            // override if Zone/Record obj is provided
+            if (Zone != null) { ZoneId = Zone.Id; }
+            if (Record != null) { RecordId = Record.Id; }
+            //
+            if (ZoneId == null || RecordId == null)
+            {
+                throw new Exception("-RecordId and -ZoneId are required parameters for this command.");
             }
         }
         protected override void ProcessRecord()
         {
-            RmIonRecord client = new RmIonRecord(Token, ZoneId, RecordId);
-            client.Run();
+            RmIonRecord.Run(ZoneId, RecordId);
         }
     }
 }

@@ -1,27 +1,28 @@
+
 namespace IonMod
 {
-    public class RmIonRecord : IonHttp
+    public static class RmIonRecord
     {
-        public string ZoneId;
-        public string RecordId;
         //
         //
-        public RmIonRecord(IonToken token, string zoneid, string recordid) : base(token)
+        public static void Run(IonZone zone, IonRecord record)
         {
-            ZoneId = zoneid;
-            RecordId = recordid;
+            Run(zone.Id, record.Id);
         }
         //
-        public RmIonRecord(IonToken token, string zoneid, IonRecord record) : base(token)
+        public static void Run(string zoneId, IonRecord record)
         {
-            ZoneId = zoneid;
-            RecordId = record.Id;
+            Run(zoneId, record.Id);
         }
         //
-        //
-        public void Run()
+        public static void Run(IonZone zone, string recordId)
         {
-            Delete<IonRecord>("/" + ZoneId + "/records/" + RecordId);
+            Run(zone.Id, recordId);
+        }
+        //
+        public static void Run(string zoneId, string recordId)
+        {
+            IonConnect.Delete("/" + zoneId + "/records/" + recordId);
         }
     }
 }

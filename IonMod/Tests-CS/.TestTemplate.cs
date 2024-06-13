@@ -1,16 +1,20 @@
+/*
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using IonMod;
-
+using System.Diagnostics;
 
 namespace IonModTest
 {
     //
     [TestClass]
-    public class RmIonRecordTest
+    public class TestTemplate
     {
-        //
-        private static IonToken Token = new IonToken(TestIonParameters.PublicPrefix, TestIonParameters.Secret);
-        /*
+        // Init test with login
+        public TestTemplate()
+        {
+            TestIonParameters.LoginTest();
+        }
+        
         [TestMethod]
         public void TestTemplateMethod1()
         {
@@ -22,7 +26,8 @@ namespace IonModTest
         {
 
         }
-        */
+        
     }
-    
+    //
 }
+*/

@@ -1,0 +1,12 @@
+IonMod-Test.ps1
+ionoskeys
+runbook
+IonMod.code-workspace
+TODO
+IonMod/bin
+IonMod/obj
+IonMod/Testresults
+PwshDoc.cs
+IonMod.sln
+IonMod/PsTestResults
+SECRETS.json

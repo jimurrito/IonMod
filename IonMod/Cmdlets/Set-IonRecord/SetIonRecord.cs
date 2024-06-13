@@ -2,24 +2,18 @@ using Newtonsoft.Json;
 
 namespace IonMod
 {
-    public class SetIonRecord : IonHttp
+    public static class SetIonRecord
     {
-        public string ZoneId;
-        public string Record;
-        public string RecordId;
         //
         //
-        public SetIonRecord(IonToken token, string zoneId, IonRecord record) : base(token)
+        public static IonRecord Run(IonZone zone, IonRecord record)
         {
-            ZoneId = zoneId;
-            RecordId = record.Id;
-            Record = JsonConvert.SerializeObject(record);
+            return Run(zone.Id, record);
         }
         //
-        //
-        public void Run()
+        public static IonRecord Run(string zoneId, IonRecord record)
         {
-            Put<IonRecord>("/" + ZoneId + "/records/" + RecordId, Record);
+            return IonConnect.Put<IonRecord>("/" + zoneId + "/records/" + record.Id, JsonConvert.SerializeObject(record));
         }
     }
 }

@@ -1,21 +1,22 @@
 namespace IonMod
 {
-    public class GetIonRecord : IonHttp
+    public static class GetIonRecord
     {
-        public string ZoneId;
-        public string RecordId;
         //
         //
-        public GetIonRecord(IonToken token, string zoneid, string recordid) : base(token)
+        public static IonRecord Run(IonZone zone, string recordId)
         {
-            ZoneId = zoneid;
-            RecordId = recordid;
+            return Run(zone.Id,recordId);
         }
         //
-        //
-        public IonRecord Run()
+        public static IonRecord Run(IonZone zone, IonRecord record)
         {
-            return Get<IonRecord>("/" + ZoneId + "/records/" + RecordId);
+            return Run(zone.Id,record.Id);
+        }
+        //
+        public static IonRecord Run(string zoneId, string recordId)
+        {
+            return IonConnect.Get<IonRecord>("/" + zoneId + "/records/" + recordId);
         }
     }
 }

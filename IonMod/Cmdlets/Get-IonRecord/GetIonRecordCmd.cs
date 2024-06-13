@@ -3,28 +3,49 @@ using System.Management.Automation;
 namespace IonMod
 
 {
-    // New-IonToken
     [Cmdlet(VerbsCommon.Get, "IonRecord")]
     public class GetIonRecordCmd : Cmdlet
     {
         //
         //
         // Params
-        [Parameter(Mandatory = true, ValueFromPipeline = true)] 
-        public required IonToken Token { get; set; }
-        //
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, ParameterSetName = "stringIds")]
+        [Parameter(Mandatory = true, ParameterSetName = "RecObj+stringId")]
         public required string ZoneId { get; set; }
         //
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, ParameterSetName = "stringIds")]
+        [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+stringId")]
         public required string RecordId { get; set; }
         //
         //
+        [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+stringId")]
+        [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj")]
+        public required IonZone Zone { get; set; }
+        //
+        [Parameter(Mandatory = true, ParameterSetName = "RecObj+stringId")]
+        [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj")]
+        public required IonRecord Record { get; set; }
+        //
+        //
+        //
         // Logic
+        protected override void BeginProcessing()
+        {
+            // Zone obj takes priority
+            if (Zone != null)
+            {
+                ZoneId = Zone.Id;
+            }
+            // Record obj takes priority
+            if (Record != null)
+            {
+                RecordId = Record.Id;
+            }
+        }
+        //
         protected override void ProcessRecord()
         {
-            GetIonRecord client = new GetIonRecord(Token, ZoneId, RecordId);
-            WriteObject(client.Run());
+            WriteObject(GetIonRecord.Run(ZoneId, RecordId));
         }
     }
 }

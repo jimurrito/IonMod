@@ -1,25 +1,22 @@
-using Newtonsoft.Json;
-
 namespace IonMod
 {
-    public class GetIonZone : IonHttp
+    public static class GetIonZone
     {
-        public GetIonZone(IonToken token) : base(token) { }
         //
         /*
         Gets Zones from IONOS. This returns ALL zones under your IONOS account.
         */
-        public List<IonZone> Run()
+        public static List<IonZone> Run()
         {
-            return Get<List<IonZone>>();
+            return IonConnect.Get<List<IonZone>>();
         }
         //
         /*
         Gets data on a specfic Zone. Returns a single Zone, and its associated records.
         */
-        public IonZone Run(string zoneId)
+        public static IonZone Run(string zoneId)
         {
-            return Get<IonZone>("/" + zoneId);
+            return IonConnect.Get<IonZone>("/" + zoneId);
         }
     }
 }

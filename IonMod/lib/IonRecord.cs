@@ -15,26 +15,27 @@ namespace IonMod
     public class IonRecord
     {
         public string Name;
-        public string RootName = "";
-        public string Type = "A";
+        public string RootName;
+        public string Type;
         public string Content;
-        public string ChangeDate = "";
-        public string TTL = "3600";
-        public bool Disabled = false;
-        public string Id = "";
+        public string ChangeDate;
+        public string TTL;
+        public bool Disabled;
+        public string Id;
         //
-        //
-        public IonRecord(string name, string rootname, string type, 
-            string content, string changedate, string ttl, bool disabled, string id)
+        public IonRecord(string name, string content, string rootname = "", string type = "A",
+             string changedate = "", string ttl = "3600", bool disabled = false, string id = "")
         {
             Name = name;
-            RootName = rootname;
-            Type = type;
             Content = content;
+            Id = id;
+            Type = type;
+            RootName = rootname;
             ChangeDate = changedate;
             TTL = ttl;
             Disabled = disabled;
-            Id = id;
         }
+        //
+        //
     }
 }
