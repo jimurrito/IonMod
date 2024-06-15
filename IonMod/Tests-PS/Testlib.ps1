@@ -5,7 +5,7 @@ function Start-Test {
         [scriptblock]$Test,
         [parameter(Mandatory = $true)]
         [string]$DumpLocation,
-        [int]$Timeout = 5
+        [int]$Timeout = 10
     )
     #
     $Result; # Dont remove
@@ -19,6 +19,7 @@ function Start-Test {
         Write-Host "Test Passed!" -ForegroundColor green
         #
         $Result = "Test Passed!`nTest Output:`n" + ($Result | ConvertTo-Json)
+        $DumpLocation = "{0}_passed.log" -f $DumpLocation
     }
     catch {
         #
@@ -26,6 +27,7 @@ function Start-Test {
         Write-Host "Test Failed!" -ForegroundColor red
         #
         $Result = "Test Failed!`nError Message:`n" + ($_ | ConvertTo-Json)
+        $DumpLocation = "{0}_failed.log" -f $DumpLocation
     }
     finally {
         # Write
@@ -33,7 +35,7 @@ function Start-Test {
         Set-Content -Value $Result -Path $DumpLocation -Force
         #
         # Start timer
-        Write-Host "`nWindow will close after $Timeout seconds."
+        Write-Host "`nWindow will close after $Timeout seconds..."
         Start-Sleep $Timeout
         exit
     }

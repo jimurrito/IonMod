@@ -1,4 +1,4 @@
-#
+# DO NOT MODIFY
 Param(
     [parameter(Mandatory = $true)]
     [string]$DumpLocation,
@@ -14,17 +14,19 @@ Write-Host $PSCommandPath -ForegroundColor Blue
 # Load test module
 Import-Module -Name $Secrets.ModulePath
 #
-#
+# DO NOT MODIFY
 #
 # Test
 {
     Connect-Ion -PublicPrefix $Secrets.PublicPrefix -Secret $Secrets.Secret
-    $Record = Get-IonRecord -ZoneId $Secrets.TestZoneId -RecordId $Secrets.TestRecordId
-    Assert-Assertion ($null -ne $Record) '$null -ne $Record'
-    return $Record
+    $Zone = Get-IonZone -ZoneId $Secrets.TestZoneId
+    Assert-Assertion ($null -ne $Zone)
+    $Zone | Set-IonZone -Records $Zone.Records -Debug
+    #Set-IonZone -Records $Zone.Records -ZoneId $Zone.Id
+    return "void - success"
 } 
 #
-#
+# DO NOT MODIFY
 #
 # Pipe test block into fn to run and validate
-| start-test -DumpLocation ("$DumpLocation/{0}" -f $PSCommandPath.Split("\")[-1].Split(".")[0])
+| start-test -DumpLocation ("$DumpLocation/{0}.log" -f $PSCommandPath.Split("\")[-1].Split(".")[0])

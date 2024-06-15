@@ -8,36 +8,43 @@ namespace IonMod
     {
         //
         //
-        [Parameter(ValueFromPipeline = true)]
-        public IonZone? Zone { get; set; }
+        [Parameter(Mandatory = true, ParameterSetName = "RecObj+stringId")]
+        public required string? ZoneId { get { return zoneid; } set { zoneid = value; } }
+        private string? zoneid;
         //
-        [Parameter()]
-        public string? ZoneId { get; set; }
         //
-        [Parameter(ValueFromPipeline = true)]
-        public List<IonRecord?>? Records { get; set; }
+        [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+stringId", ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj", ValueFromPipeline = true)]
+        public required IonZone? Zone { get { return zone; } set { zone = value; } }
+        private IonZone? zone;
+        //
+        //
+        [Parameter(Mandatory = true, ParameterSetName = "RecObj+stringId", ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj")]
+        public required List<IonRecord>? Records { get { return records; } set { records = value; } }
+        private  List<IonRecord>? records;
         //
         //
         // Logic
         protected override void BeginProcessing()
         {
             // override if Zone obj is provided
-            if (Zone != null)
+            if (zone != null)
             {
-                ZoneId = Zone.Id;
-                Records = Zone.Records;
+                WriteError("IonZone object used.");
+                zoneid = zone.Id;
+                records = zone.Records ?? throw new IonUninitException();
             }
-            //
-            if (ZoneId == null || Records == null)
+            else
             {
-                throw new Exception("-ZoneId and a list of records (-Records) are required for this command.");
+                throw new IonUninitException();
             }
         }
         //
         //
         protected override void ProcessRecord()
         {
-            SetIonZone.Run(ZoneId,Records);
+            SetIonZone.Run(zoneid, records);
         }
     }
 }

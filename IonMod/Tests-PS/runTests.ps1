@@ -3,7 +3,7 @@
 $SecretPath = "C:\Users\james\Documents\code\IonMod\SECRETS.json"
 #
 # Import TestLib
-Import-Module -Name "$PSScriptRoot\testlib.ps1"
+Import-Module -Name "$PSScriptRoot/Testlib.ps1"
 #
 # Pull dump location
 $DumpLocation = (Get-Secrets $SecretPath).DumpPath

@@ -6,4 +6,5 @@ namespace IonMod
     public class IonDeserialException : Exception {}
     public class IonUninitException : Exception {}
     public class IonUninitLoginException : Exception {}
+    public class IonMissingArgException : Exception {}
 }

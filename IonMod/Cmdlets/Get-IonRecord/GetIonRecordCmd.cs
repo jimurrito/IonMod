@@ -18,11 +18,11 @@ namespace IonMod
         public required string RecordId { get; set; }
         //
         //
-        [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+stringId")]
+        [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+stringId", ValueFromPipeline = true)]
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj")]
         public required IonZone Zone { get; set; }
         //
-        [Parameter(Mandatory = true, ParameterSetName = "RecObj+stringId")]
+        [Parameter(Mandatory = true, ParameterSetName = "RecObj+stringId", ValueFromPipeline = true)]
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj")]
         public required IonRecord Record { get; set; }
         //

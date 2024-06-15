@@ -10,13 +10,11 @@ namespace IonMod
     {
         //
         // Params
-        //[Parameter(ValueFromPipeline = true, ParameterSetName = "stringId")]
         [Parameter(ValueFromPipeline = true)]
-        public string? ZoneId { get; set; }
+        public required string ZoneId { get; set; }
         //
-        //[Parameter(ValueFromPipeline = true, ParameterSetName = "ZoneObj")]
         [Parameter(ValueFromPipeline = true)]
-        public IonZone? Zone { get; set; }
+        public required IonZone Zone { get; set; }
         //
         // Logic
         protected override void BeginProcessing()
