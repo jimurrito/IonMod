@@ -4,7 +4,6 @@ namespace IonMod
 
 
 {
-    //[CmdletBinding(DefaultParameterSetName = "none")]
     [Cmdlet(VerbsCommon.Get, "IonZone")]
     public class GetIonZoneCmd : PSCmdlet
     {

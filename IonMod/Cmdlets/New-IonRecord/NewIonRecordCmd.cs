@@ -9,35 +9,35 @@ namespace IonMod
     {
         //
         // Params
-        [Parameter(ValueFromPipeline = true)]
-        public IonZone? Zone { get; set; }
+        [Parameter(Mandatory = true, ParameterSetName = "stringId+RecObj")]
+        public required string ZoneId { get; set; }
         //
-        [Parameter()]
-        public string? ZoneId { get; set; }
         //
-        [Parameter(ValueFromPipeline = true)]
-        public List<IonRecord>? Records { get; set; }
+        [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj", ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ParameterSetName = "ZoneObj", ValueFromPipeline = true)]
+        public required IonZone Zone { get; set; }
+        //
+        //
+        [Parameter(Mandatory = true, ParameterSetName = "stringId+RecObj", ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj")]
+        public required List<IonRecord> Records { get; set; }
         //
         // Logic
-        protected override void BeginProcessing()
-        {
-            // Zone obj takes priority
-            if (Zone != null)
-            {
-                ZoneId = Zone.Id;
-            }
-        }
-        //
         protected override void ProcessRecord()
         {
-            if (ZoneId == null)
+            //
+            switch (ParameterSetName)
             {
-                WriteObject(GetIonZone.Run());
+                case "ZoneObj+RecObj":
+                    ZoneId = Zone.Id;
+                    break;
+                case "ZoneObj":
+                    ZoneId = Zone.Id;
+                    Records = Zone.Records;
+                    break;
             }
-            else
-            {
-                WriteObject(GetIonZone.Run(ZoneId));
-            }
+            //
+            WriteObject(NewIonRecord.Run(ZoneId, Records));
         }
     }
 }

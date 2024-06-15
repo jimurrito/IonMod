@@ -13,6 +13,7 @@ namespace IonMod
         //
         //
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj", ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ParameterSetName = "ZoneObj", ValueFromPipeline = true)]
         public required IonZone Zone { get; set; }
         //
         //
@@ -24,11 +25,16 @@ namespace IonMod
         // Logic
         protected override void ProcessRecord()
         {
-            // override if Zone obj is provided
-            if (ParameterSetName == "ZoneObj+RecObj")
+            //
+            switch (ParameterSetName)
             {
-                ZoneId = Zone.Id;
-                Records = Zone.Records;
+                case "ZoneObj+RecObj":
+                    ZoneId = Zone.Id;
+                    break;
+                case "ZoneObj":
+                    ZoneId = Zone.Id;
+                    Records = Zone.Records;
+                    break;
             }
             //
             SetIonZone.Run(ZoneId, Records);

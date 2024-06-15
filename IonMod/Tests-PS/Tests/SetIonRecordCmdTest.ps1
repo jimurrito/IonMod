@@ -20,17 +20,18 @@ Import-Module -Name $Secrets.ModulePath
 {
     Connect-Ion -PublicPrefix $Secrets.PublicPrefix -Secret $Secrets.Secret
     $Zone = Get-IonZone -ZoneId $Secrets.TestZoneId
-    Assert-Assertion ($null -ne $Zone)
+    Assert-Assertion ($Zone) '$zone'
+    $Record = Get-IonRecord -ZoneId $Zone.Id -RecordId $Secrets.TestRecordId
+    Assert-Assertion ($Record) '$record'
     #
-    # SetIonZone modality tests (no need for assert as these are all void returns)
-    # Zoneobj + List<RecordObj>
-    $Zone | Set-IonZone -Records $Zone.Records
-    Set-IonZone -Records $Zone.Records -Zone $Zone
-    # Zoneobj only (used records in zone)
-    $Zone | Set-IonZone
-    # string zone ID + List<RecordObj>
-    Set-IonZone -Records $Zone.Records -ZoneId $Zone.Id
-    return "void - Success"
+    # Modality tests
+    #
+    # stringId+RecObj
+    Assert-Assertion (Set-IonRecord -ZoneId $Zone.Id -Record $Record) 'Set-IonRecord -ZoneId $Zone.Id -Record $Record'
+    # ZoneObj+RecObj
+    Assert-Assertion ($Zone | Set-IonRecord -Record $Record) '$Zone | Set-IonRecord -Record $Record'
+    #
+    return $Record
 } 
 #
 # DO NOT MODIFY

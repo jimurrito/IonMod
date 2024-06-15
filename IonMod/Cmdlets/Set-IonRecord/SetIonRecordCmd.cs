@@ -3,44 +3,33 @@ namespace IonMod
 
 
 {
-    // New-IonToken
     [Cmdlet(VerbsCommon.Set, "IonRecord")]
     public class SetIonRecordCmd : PSCmdlet
     {
-        // 
-        // Remove required if this cmd doesnt work
         //
         //
-        [Parameter(ValueFromPipeline = true)]
-        public required IonZone Zone { get; set; }
-        //
-        [Parameter()]
+        [Parameter(Mandatory = true, ParameterSetName = "stringId+RecObj")]
         public required string ZoneId { get; set; }
         //
-        [Parameter(ValueFromPipeline = true)]
+        //
+        [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj", ValueFromPipeline = true)]
+        public required IonZone Zone { get; set; }
+        //
+        [Parameter(Mandatory = true, ParameterSetName = "stringId+RecObj", ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj")]
         public required IonRecord Record { get; set; }
         //
         //
         // Logic
-        protected override void BeginProcessing()
+        protected override void ProcessRecord()
         {
             // override if Zone obj is provided
-            if (Zone != null)
+            if (ParameterSetName == "ZoneObj+RecObj")
             {
                 ZoneId = Zone.Id;
             }
             //
-            if (ZoneId == null || Record == null)
-            {
-                throw new Exception("-RecordId and -ZoneId are required parameters for this command.");
-            }
-
-        }
-        //
-        //
-        protected override void ProcessRecord()
-        {
-            SetIonRecord.Run(ZoneId, Record);
+            WriteObject(SetIonRecord.Run(ZoneId, Record));
         }
     }
 }

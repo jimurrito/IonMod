@@ -10,33 +10,42 @@ namespace IonMod
         //
         //
         //
-        [Parameter(ValueFromPipeline = true)]
-        public IonZone? Zone { get; set; }
+        [Parameter(Mandatory = true, ParameterSetName = "stringIds")]
+        [Parameter(Mandatory = true, ParameterSetName = "stringId+RecObj")]
+        public required string ZoneId { get; set; }
         //
-        [Parameter()]
-        public string? ZoneId { get; set; }
-        //        
-        [Parameter()]
-        public string? RecordId { get; set; }
+        [Parameter(Mandatory = true, ParameterSetName = "stringIds")]
+        [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+stringId")]
+        public required string RecordId { get; set; }
         //
-        [Parameter(ValueFromPipeline = true)]
-        public IonRecord? Record { get; set; }
+        //
+        [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+stringId", ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj", ValueFromPipeline = true)]
+        public required IonZone Zone { get; set; }
+        //
+        [Parameter(Mandatory = true, ParameterSetName = "stringId+RecObj", ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj")]
+        public required IonRecord Record { get; set; }
         //
         //
         // Logic
-        protected override void BeginProcessing()
-        {
-            // override if Zone/Record obj is provided
-            if (Zone != null) { ZoneId = Zone.Id; }
-            if (Record != null) { RecordId = Record.Id; }
-            //
-            if (ZoneId == null || RecordId == null)
-            {
-                throw new Exception("-RecordId and -ZoneId are required parameters for this command.");
-            }
-        }
         protected override void ProcessRecord()
         {
+            // 
+            switch (ParameterSetName)
+            {
+                case "stringId+RecObj":
+                    RecordId = Record.Id;
+                    break;
+                case "ZoneObj+stringId":
+                    ZoneId = Zone.Id;
+                    break;
+                case "ZoneObj+RecObj":
+                    ZoneId = Zone.Id;
+                    RecordId = Record.Id;
+                    break;
+            }
+            //            
             RmIonRecord.Run(ZoneId, RecordId);
         }
     }
