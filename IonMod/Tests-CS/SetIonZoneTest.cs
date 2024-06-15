@@ -10,7 +10,8 @@ namespace IonModTest
         IonZone TestZone;
         //
         // Init test with login
-        public SetIonZoneTest(){
+        public SetIonZoneTest()
+        {
             TestIonParameters.LoginTest();
             TestZone = GetIonZone.Run(TestIonParameters.ZoneId);
         }
@@ -19,7 +20,7 @@ namespace IonModTest
         [TestMethod]
         public void SetIonZoneTestSuccess()
         {
-           SetIonZone.Run(TestIonParameters.ZoneId,TestZone.Records);
+            SetIonZone.Run(TestIonParameters.ZoneId, TestZone.Records);
         }
     }
     //

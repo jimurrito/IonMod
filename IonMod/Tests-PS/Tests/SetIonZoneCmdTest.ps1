@@ -21,13 +21,17 @@ Import-Module -Name $Secrets.ModulePath
     Connect-Ion -PublicPrefix $Secrets.PublicPrefix -Secret $Secrets.Secret
     $Zone = Get-IonZone -ZoneId $Secrets.TestZoneId
     Assert-Assertion ($null -ne $Zone)
+    #
+    # SetIonZone modality tests (no need for assert as these are all void returns)
+    # Zoneobj + List<RecordObj>
     $Zone | Set-IonZone -Records $Zone.Records
-    #Set-IonZone -Records $Zone.Records -Zone $Zone
-    #Set-IonZone -Records $Zone.Records -ZoneId $Zone.Id
-    return "void - success"
+    Set-IonZone -Records $Zone.Records -Zone $Zone
+    # string zone ID + List<RecordObj>
+    Set-IonZone -Records $Zone.Records -ZoneId $Zone.Id
+    return "void - Success"
 } 
 #
 # DO NOT MODIFY
 #
 # Pipe test block into fn to run and validate
-| start-test -Timeout 15 -DumpLocation ("$DumpLocation/{0}.log" -f $PSCommandPath.Split("\")[-1].Split(".")[0])
+| start-test -DumpLocation ("$DumpLocation/{0}" -f $PSCommandPath.Split("\")[-1].Split(".")[0])

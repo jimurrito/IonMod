@@ -10,7 +10,7 @@ namespace IonMod
         //
         // Params
         [Parameter(Mandatory = true, ParameterSetName = "stringIds")]
-        [Parameter(Mandatory = true, ParameterSetName = "RecObj+stringId")]
+        [Parameter(Mandatory = true, ParameterSetName = "stringId+RecObj")]
         public required string ZoneId { get; set; }
         //
         [Parameter(Mandatory = true, ParameterSetName = "stringIds")]
@@ -19,33 +19,33 @@ namespace IonMod
         //
         //
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+stringId", ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj")]
+        [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj", ValueFromPipeline = true)]
         public required IonZone Zone { get; set; }
         //
-        [Parameter(Mandatory = true, ParameterSetName = "RecObj+stringId", ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ParameterSetName = "stringId+RecObj", ValueFromPipeline = true)]
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj")]
         public required IonRecord Record { get; set; }
         //
         //
         //
         // Logic
-        protected override void BeginProcessing()
-        {
-            
-            // Zone obj takes priority
-            if (Zone != null)
-            {
-                ZoneId = Zone.Id;
-            }
-            // Record obj takes priority
-            if (Record != null)
-            {
-                RecordId = Record.Id;
-            }
-        }
-        //
         protected override void ProcessRecord()
         {
+            // 
+            switch (ParameterSetName)
+            {
+                case "stringId+RecObj":
+                    RecordId = Record.Id;
+                    break;
+                case "ZoneObj+stringId":
+                    ZoneId = Zone.Id;
+                    break;
+                case "ZoneObj+RecObj":
+                    ZoneId = Zone.Id;
+                    RecordId = Record.Id;
+                    break;
+            }
+            //
             WriteObject(GetIonRecord.Run(ZoneId, RecordId));
         }
     }

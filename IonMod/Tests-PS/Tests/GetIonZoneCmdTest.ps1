@@ -21,12 +21,20 @@ Import-Module -Name $Secrets.ModulePath
 # test
 {
     Connect-Ion -PublicPrefix $Secrets.PublicPrefix -Secret $Secrets.Secret
+    # get all zones
     $Zones = Get-IonZone
-    Assert-Assertion ($null -ne $Zones) '$null -ne $Zones'
+    Assert-Assertion ($Zones) '$null -ne $Zones'
+    # get one zone (obj - piped)
+    Assert-Assertion (($Zones[0] | Get-IonZone)) '$Zones[0] | Get-IonZone'
+    # get one zone (Id - piped)
+    Assert-Assertion (($Zones[0].Id | Get-IonZone)) '$Zones[0].Id | Get-IonZone'
+    # get one zone (Id)
+    Assert-Assertion ((Get-IonZone -ZoneId $Zones[0].Id)) 'Get-IonZone -ZoneId $Zones[0].Id'
+    #
     return $Zones
 } 
 # Pipe test block into fn to run and validate
-| start-test -DumpLocation ("$DumpLocation/{0}.log" -f $PSCommandPath.Split("\")[-1].Split(".")[0])
+| start-test -DumpLocation ("$DumpLocation/{0}" -f $PSCommandPath.Split("\")[-1].Split(".")[0])
 
 
 

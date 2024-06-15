@@ -26,4 +26,4 @@ Import-Module -Name $Secrets.ModulePath
 # DO NOT MODIFY
 #
 # Pipe test block into fn to run and validate
-| start-test -DumpLocation ("$DumpLocation/{0}.log" -f $PSCommandPath.Split("\")[-1].Split(".")[0])
+| start-test -DumpLocation ("$DumpLocation/{0}" -f $PSCommandPath.Split("\")[-1].Split(".")[0])

@@ -28,6 +28,7 @@ function Start-Test {
         #
         $Result = "Test Failed!`nError Message:`n" + ($_ | ConvertTo-Json)
         $DumpLocation = "{0}_failed.log" -f $DumpLocation
+        $Timeout += 30 # have failed runs stay live longer
     }
     finally {
         # Write
@@ -42,15 +43,14 @@ function Start-Test {
 
 }
 
-function Assert-Assertion {
-    param($one = $1, $two = $2) if (!$one) { throw "Assertion Failed: Input[$two] Output[$one]" }
+function Assert-Assertion($inputs = $1, $FncString = $2) {
+    if (!$inputs) { throw "Assertion Failed: Input[$FncString] Output[$inputs]" }
 }
 
 function New-Folder($Name) {
     New-Item -ItemType Directory -path $name -ErrorAction SilentlyContinue | Out-Null
 }
 
-function Get-Secrets($Path)
-{
+function Get-Secrets($Path) {
     Get-Content -Path $Path | ConvertFrom-Json
 }

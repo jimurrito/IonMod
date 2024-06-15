@@ -70,7 +70,14 @@ namespace IonMod
         // Deserializer
         private static T Deserialize<T>(string input)
         {
-            return JsonConvert.DeserializeObject<T>(input) ?? throw new IonDeserialException("Deserialization on <[" + input + "]> failed. Please check it is compatible with the target class.");
+            // Exception anon-fn
+            Func<string, IonDeserialException> throwE = input =>
+             {
+                 throw new IonDeserialException("Deserialization on <[" + input + "]> failed. Please check it is compatible with the target class.");
+             };
+
+            try { return JsonConvert.DeserializeObject<T>(input) ?? throw throwE(input); }
+            catch { throw throwE(input); }
         }
         //
         //

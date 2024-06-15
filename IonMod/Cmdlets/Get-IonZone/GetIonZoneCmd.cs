@@ -17,27 +17,17 @@ namespace IonMod
         public required IonZone Zone { get; set; }
         //
         // Logic
-        protected override void BeginProcessing()
-        {
-            // Zone obj takes priority over zoneId input
-            if (Zone != null)
-            {
-                ZoneId = Zone.Id;
-            }
-        }
-        //
         protected override void ProcessRecord()
         {
-            if (ZoneId == null)
-            {
-                // pulls all Zones available
-                WriteObject(GetIonZone.Run());
-            }
-            else
-            {
-                // pulls a single zone + associated records
-                WriteObject(GetIonZone.Run(ZoneId));
-            }
+            // Pipe validation
+            // Zone obj takes priority over zoneId input
+            if (Zone != null) { ZoneId = Zone.Id; }
+            //
+            // pulls
+            // pulls all Zones available
+            if (ZoneId == null) { WriteObject(GetIonZone.Run()); }
+            // pulls a single zone + associated records
+            else { WriteObject(GetIonZone.Run(ZoneId)); }
         }
     }
 }

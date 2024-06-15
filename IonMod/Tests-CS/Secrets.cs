@@ -29,7 +29,7 @@ namespace IonModTest
     // Secret Deserialization template
     internal class Secrets
     {
-        #pragma warning disable // Suppresses warnings about the properties not being assigned.
+#pragma warning disable // Suppresses warnings about the properties not being assigned.
         //
         public required string DumpPath;
         public required string ModulePath;
@@ -38,7 +38,7 @@ namespace IonModTest
         public required string TestZoneId;
         public required string TestRecordId;
         //
-        #pragma warning restore
+#pragma warning restore
     }
 
 
