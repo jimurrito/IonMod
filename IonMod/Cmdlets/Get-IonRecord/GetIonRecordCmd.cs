@@ -4,7 +4,7 @@ namespace IonMod
 
 {
     [Cmdlet(VerbsCommon.Get, "IonRecord")]
-    public class GetIonRecordCmd : Cmdlet
+    public class GetIonRecordCmd : PSCmdlet
     {
         //
         //
@@ -31,6 +31,7 @@ namespace IonMod
         // Logic
         protected override void BeginProcessing()
         {
+            
             // Zone obj takes priority
             if (Zone != null)
             {

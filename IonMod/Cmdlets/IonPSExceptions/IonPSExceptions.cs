@@ -1,11 +1,5 @@
+
 using System.Management.Automation;
-namespace IonMod
+//namespace IonMod
 
-public class IonUnauthorizedExceptionPS : ErrorRecord
-{
-    public IonUnauthorizedExceptionPS
-    {
-
-    }
-
-}
+//public class IonPSExceptions

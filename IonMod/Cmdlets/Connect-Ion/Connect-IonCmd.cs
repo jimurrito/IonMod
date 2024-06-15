@@ -5,7 +5,7 @@ namespace IonMod
 
 {
     [Cmdlet(VerbsCommunications.Connect, "Ion")]
-    public class ConnectIonCmd : Cmdlet
+    public class ConnectIonCmd : PSCmdlet
     {
         //
         // Params

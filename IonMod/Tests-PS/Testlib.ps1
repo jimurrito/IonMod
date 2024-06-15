@@ -5,7 +5,7 @@ function Start-Test {
         [scriptblock]$Test,
         [parameter(Mandatory = $true)]
         [string]$DumpLocation,
-        [int]$Timeout = 10
+        [int]$Timeout = 2
     )
     #
     $Result; # Dont remove

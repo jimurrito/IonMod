@@ -5,7 +5,7 @@ namespace IonMod
 {
     // New-IonToken
     [Cmdlet(VerbsCommon.Remove, "IonRecord")]
-    public class RemoveIonRecordCmd : Cmdlet
+    public class RemoveIonRecordCmd : PSCmdlet
     {
         //
         //

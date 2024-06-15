@@ -17,10 +17,17 @@ namespace IonMod
         {
             Token = token;
         }
+        //
+        // Login (String instead of Token obj)
+        public static void Login(string publicprefix, string secret)
+        {
+            Token = new(publicprefix, secret);
+        }
+        //
         // Login check
         private static void LoginCheck()
         {
-            if (Token == null) { throw new IonUninitLoginException(); }
+            if (Token == null) { throw new IonUninitLoginException("Login for IONOS is required. Please use the method `IonConnect.Login()` to initialize the IONOS token."); }
         }
         //
         // Generic request method
@@ -41,19 +48,20 @@ namespace IonMod
             request.Headers.Add("User-Agent", "IonMod");
             //
             HttpResponseMessage response = Client.Send(request);
-            // Custom exception for non 200s
-            switch (response.StatusCode)
-            { 
-                case HttpStatusCode.BadRequest:             //400
-                    throw new IonBadRequestException();
-                case HttpStatusCode.Unauthorized:           //401 (Most common)
-                    throw new IonUnauthorizedException();
-                case HttpStatusCode.InternalServerError:    //500
-                    throw new IonServerErrorException();
-
-            }
             // Pull content from HttpResponseMessage
             StreamReader reader = new StreamReader(response.Content.ReadAsStream());
+            //
+            // Custom exception for non 200s
+            switch (response.StatusCode)
+            {
+                case HttpStatusCode.BadRequest:             //400
+                    throw new IonBadRequestException("[HTTP::400] " + reader.ReadToEnd());
+                case HttpStatusCode.Unauthorized:           //401 (Most common)
+                    throw new IonUnauthorizedException("[HTTP::401] " + reader.ReadToEnd());
+                case HttpStatusCode.InternalServerError:    //500
+                    throw new IonServerErrorException("[HTTP::500] " + reader.ReadToEnd());
+
+            }
             // return content deserialized into an Obj
             return reader.ReadToEnd();
         }
@@ -62,7 +70,7 @@ namespace IonMod
         // Deserializer
         private static T Deserialize<T>(string input)
         {
-            return JsonConvert.DeserializeObject<T>(input) ?? throw new IonDeserialException();
+            return JsonConvert.DeserializeObject<T>(input) ?? throw new IonDeserialException("Deserialization on <[" + input + "]> failed. Please check it is compatible with the target class.");
         }
         //
         //

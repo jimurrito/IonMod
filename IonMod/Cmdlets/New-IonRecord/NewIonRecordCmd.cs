@@ -5,7 +5,7 @@ namespace IonMod
 
 {
     [Cmdlet(VerbsCommon.New, "IonRecord")]
-    public class NewIonRecordCmd : Cmdlet
+    public class NewIonRecordCmd : PSCmdlet
     {
         //
         // Params
