@@ -27,7 +27,7 @@ Import-Module -Name $Secrets.ModulePath
     $NewRecObj = $Zone | New-IonRecord -Records $RecordObj
     Assert-Assertion $NewRecObj '$Zone | New-IonRecord -Records [$RecordObj]'
     # Rm from Ionos
-    $Zone | Remove-IonRecord -Record $NewRecObj
+    $Zone | Remove-IonRecord -RecordId $NewRecObj.Id
     #
     return "void - Success"
 } 
