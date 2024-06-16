@@ -10,17 +10,17 @@ namespace IonMod
         //
         // Params
         [Parameter(Mandatory = true, ParameterSetName = "stringId+RecObj")]
-        public required string ZoneId { get; set; }
+        public required string ZoneId;
         //
         //
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj", ValueFromPipeline = true)]
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj", ValueFromPipeline = true)]
-        public required IonZone Zone { get; set; }
+        public required IonZone Zone;
         //
         //
         [Parameter(Mandatory = true, ParameterSetName = "stringId+RecObj", ValueFromPipeline = true)]
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj")]
-        public required List<IonRecord> Records { get; set; }
+        public required List<IonRecord> Records;
         //
         // Logic
         protected override void ProcessRecord()

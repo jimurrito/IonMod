@@ -10,10 +10,10 @@ namespace IonMod
         //
         // Params
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
-        public required string PublicPrefix { get; set; }
+        public required string PublicPrefix;
         //
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
-        public required string Secret { get; set; }
+        public required string Secret;
         //
         // Logic
         protected override void ProcessRecord()

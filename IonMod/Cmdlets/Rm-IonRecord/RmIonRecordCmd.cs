@@ -12,20 +12,20 @@ namespace IonMod
         //
         [Parameter(Mandatory = true, ParameterSetName = "stringIds")]
         [Parameter(Mandatory = true, ParameterSetName = "stringId+RecObj")]
-        public required string ZoneId { get; set; }
+        public required string ZoneId;
         //
         [Parameter(Mandatory = true, ParameterSetName = "stringIds")]
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+stringId")]
-        public required string RecordId { get; set; }
+        public required string RecordId;
         //
         //
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+stringId", ValueFromPipeline = true)]
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj", ValueFromPipeline = true)]
-        public required IonZone Zone { get; set; }
+        public required IonZone Zone;
         //
         [Parameter(Mandatory = true, ParameterSetName = "stringId+RecObj", ValueFromPipeline = true)]
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj")]
-        public required IonRecord Record { get; set; }
+        public required IonRecord Record;
         //
         //
         // Logic
