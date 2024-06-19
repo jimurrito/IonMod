@@ -1,17 +1,8 @@
 namespace IonMod
 {
-    /*
-    Example:
-        "name": "virtrillo.com",
-        "rootName": "virtrillo.com",
-        "type": "NS",
-        "content": "ns1090.ui-dns.biz",
-        "changeDate": "2021-07-12T07:27:57.958Z",
-        "ttl": 86400,
-        "disabled": false,
-        "id": "733f7f2d-d73b-7f0d-a3b1-73d77f3479d1"
-    */
-
+    /// <summary>
+    /// Represents a DNS record in an IONOS domain.
+    /// </summary>
     public class IonRecord
     {
         public string Name;
@@ -22,7 +13,18 @@ namespace IonMod
         public string TTL;
         public bool Disabled;
         public string Id;
-        //
+
+        /// <summary>
+        /// Initializes a new instance of the IonRecord class.
+        /// </summary>
+        /// <param name="name">The name of the DNS record. Ex. rec.domain.com</param>
+        /// <param name="content">The content of the DNS record.</param>
+        /// <param name="rootname">The root name of the DNS record. Ex. domain.com</param>
+        /// <param name="type">The type of the DNS record. Default is "A".</param>
+        /// <param name="changedate">The change date of the DNS record. Set by IONOS.</param>
+        /// <param name="ttl">The time-to-live of the DNS record. Default is "3600".</param>
+        /// <param name="disabled">A value indicating whether the DNS record is disabled. Default is false.</param>
+        /// <param name="id">The ID of the DNS record. Set by IONOS.</param>
         public IonRecord(string name, string content, string rootname = "", string type = "A",
              string changedate = "", string ttl = "3600", bool disabled = false, string id = "")
         {
@@ -35,7 +37,5 @@ namespace IonMod
             TTL = ttl;
             Disabled = disabled;
         }
-        //
-        //
     }
 }

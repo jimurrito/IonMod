@@ -1,40 +1,51 @@
-# IonMod : Ionos Domain Module for Powershell
-A simple and fast powershell module to handle API requests to Ionos's Domain Management API.
+# IonMod : <u>**[Unofficial]**</u> Powershell/C# SDK for IONOS Domains
+A simple and fast SDK for managing IONOS domains and records. This an unofficial project, and is not maintained by IONOS.
+This library is for C# and Powershell use.
+
+> **Warning!**
+> The change to C# was breaking. Please see below examples on the login change.
 
 # Getting started
 
-Install the Module into Powershell.
+- **PowerShell Gallery/Nuget**
+  - `install-module IonMod`
 
-```Powershell
-# From PSGallery
-Install-Module IonMod
+- **Git**
+  - `git clone https://github.com/jimurrito/IonMod`
+  - `import-module path/to/IonMod.psd1`
 
-# From Source
-Install-Module /path/to/IonMod.psm1
-```
 
-Simple script to get all DNS Zones accessible by the API credentials provided.
+## Example
+
+Simple set of cmdlets to get all DNS Zones accessible by the API credentials provided.
 ```Powershell
 Import-Module IonMod
 
-$Token = New-IonToken -PublicPrefix "XXXX" -Secret "XXXX"
-$Token | Get-IonZone
+Connect-Ion -PublicPrefix "XXXX" -Secret "XXXX"
+Get-IonZone
+
+
+Records Name                  Id                                   Type
+------- ----                  --                                   ----
+        contoso.com           00000000-0000-0000-0000-000000000000 NATIVE
+        favicon.com           00000000-0000-0000-0000-000000000000 NATIVE
+        whatdoesthefedsay.com 00000000-0000-0000-0000-000000000000 NATIVE
 ```
 
 # Function List
 
-### `New-IonToken`
+### `Connect-Ion`
 #### Description
-Combines the Public-prefix and Secret provided by IONOS for access.
+Combines the Public-prefix and Secret provided by IONOS for access to the API.
 #### Parameters
 | Parameters | Description | Default |
 | --- | --- | --- |
 | `-PublicPrefix` | Public-Prefix provided by IONOS
 | `-Secret` | Secret provided by IONOS
 #### Examples
-Generates a token
+Stores the credentials in a static class.
 ```PowerShell
-$Token = New-IonToken -PublicPrefix "XXXX" -Secret "XXXX"
+Connect-Ion -PublicPrefix "XXXX" -Secret "XXXX"
 ```
 ---
 
@@ -50,13 +61,12 @@ Grabs information of either all zones, or a specific zone when using the -ZoneId
 #### Examples
 Get all Zones accessible by the API Credentials.
 ```PowerShell
-$Token = New-IonToken -PublicPrefix "XXXX" -Secret "XXXX"
-$Token | Get-IonZone
+Get-IonZone
 ```
+
 Get all Records for an IONOS Zone.
 ```PowerShell
-$Token = New-IonToken -PublicPrefix "XXXX" -Secret "XXXX"
-$Zone = $Token | Get-IonZone -ZoneId "XXXX"
+$Zone = Get-IonZone -ZoneId "XXXX"
 $Zone.Records
 ```
 ---
@@ -72,64 +82,44 @@ Sets configurations for a given Zone. Manifest provided will be set as the curre
 | `-ZoneId` | Specifies which IONOS Zone will be used. Use `Get-IonZone` to retrieve the IDs. When provided, the query provides indepth information over the entire Zone. Information like DNS records can be retrieved for the zone.
 | `-Body` | The Zone configuration that will be set. Can be either a **[*]** Json String or PSCustomObject.
 
->**[*]** For this endpoint only, Json strings must always be in a List format. Even if there is only one json object.
-This is an IONOS side limitation. This function uses `Invoke-IonRequest`, and it will compensate for this if you provide a Powershell Object (`PSCustomObj` or `PSObject`).
->
-> **GOOD** ->
-[
-{
-    Key: {
-        Keya: "Valuea",
-        Keyb: "Valueb"
-    }
-}
-]
->
-> **BAD** ->
-{
-    Key: {
-        Keya: "Valuea",
-        Keyb: "Valueb"
-    }
-}
->
-> *See [`ConvertTo-JsonList`](#convertto-jsonlist) for more information. This is the core function that handles this scenario.*
-
-
 #### Examples
 Set Zone DNS Configuration.
 ```PowerShell
-$Token = New-IonToken -PublicPrefix "XXXX" -Secret "XXXX"
-$Token | Set-IonZone -ZoneId "XXXX" -Body <[JSON | PSObject]>
+Set-IonZone -ZoneId "XXXX" -Body <[JSON | PSObject]>
 ```
 ---
 
 
 ### `Get-IonRecord`
+
 #### Description
-Grabs all DNS Records for a provided Zone. This is the same as `($Token | Get-IonZone -ZoneId "XXXX").Records`.
+
+Grabs all DNS Records for a provided Zone. This is the same as `(Get-IonZone -ZoneId "XXXX").Records`.
+
 #### Parameters
+
 | Parameters | Description | Default |
 | --- | --- | --- |
 | `-Token` | Combination of the public prefix and secret provided by IONOS for API access. You can use 
 | `-ZoneId` | Specifies which IONOS Zone will be used. Use `Get-IonZone` to retrieve the IDs.
 | `-RecordId` | Specifies which record, within a Zone, will be used.
 | `-Types` | Specifies the type of record that should be returned. Ex: A, AAAA, TXT, MX ... | "A"
+
 #### Examples
+
 Get all Records in a Zone.
 ```PowerShell
-$Token = New-IonToken -PublicPrefix "XXXX" -Secret "XXXX"
-$Token | Get-IonRecord -ZoneId "XXXX"
+Get-IonRecord -ZoneId "XXXX"
 ```
+
 Get a specific record based on RecordId
 ```PowerShell
-$Token = New-IonToken -PublicPrefix "XXXX" -Secret "XXXX"
-$Token | Get-IonRecord -ZoneId "XXXX" -RecordId "XXXX"
+Get-IonRecord -ZoneId "XXXX" -RecordId "XXXX"
 ```
+
 Return all 'A' records for a given Zone.
 ```PowerShell
-$Token = New-IonToken -PublicPrefix "XXXX" -Secret "XXXX"
-$Token | Get-IonRecord -ZoneId "XXXX" -Types "A"
+Get-IonRecord -ZoneId "XXXX" -Types "A"
 ```
 ---
 
@@ -147,8 +137,8 @@ Uses the provided ZoneId and RecordId to change the configuration of a single Zo
 #### Examples
 Sets configuration for a Zone Record.
 ```PowerShell
-$Token = New-IonToken -PublicPrefix "XXXX" -Secret "XXXX"
-$Token | Set-IonRecord  -ZoneId "XXXX" -RecordId "XXXX"  -Body <[JSON | PSObject]>
+
+Set-IonRecord  -ZoneId "XXXX" -RecordId "XXXX"  -Body <[JSON | PSObject]>
 ```
 ---
 
@@ -165,8 +155,7 @@ Removes a Record from an IONOS Zone.
 #### Examples
 Removes an A Record from a Zone.
 ```PowerShell
-$Token = New-IonToken -PublicPrefix "XXXX" -Secret "XXXX"
-$Token | Remove-IonRecord  -ZoneId "XXXX" -RecordId "XXXX"  -Body <[JSON | PSObject]>
+Remove-IonRecord  -ZoneId "XXXX" -RecordId "XXXX"  -Body <[JSON | PSObject]>
 ```
 ---
 
@@ -183,8 +172,8 @@ Creates a new Record in an IONOS Zone.
 | `-Body` | PSObject or JSON String of your desired configuration. Body can be generated using `New-IonRecordObj`. This creates a JSON object that is ready to be pushed to IONOS.
 #### Examples
 ```PowerShell
-$Token = New-IonToken -PublicPrefix "XXXX" -Secret "XXXX"
-$Token | New-IonRecord  -ZoneId "XXXX" -RecordId "XXXX"  -Body <[JSON | (New-IonRecordObj)]>
+
+New-IonRecord  -ZoneId "XXXX" -RecordId "XXXX"  -Body <[JSON | (New-IonRecordObj)]>
 ```
 ---
 
@@ -223,12 +212,12 @@ Generic Function used to send HTTP(s) requests to the IONOS developer API. Requi
 #### Examples
 Get all Zones accessible by the API Credentials.
 ```PowerShell
-$Token = New-IonToken -PublicPrefix "XXXX" -Secret "XXXX"
+
 Invoke-IonRequest -Path "/zones" -Token $Token
 ```
 Update the information of a DNS Record
 ```PowerShell
-$Token = New-IonToken -PublicPrefix "XXXX" -Secret "XXXX"
+
 $ZoneId = "XXXX"
 $RecordId = "XXXX"
 $Body = [json]|[PSObject]
