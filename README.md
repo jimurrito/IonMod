@@ -34,7 +34,7 @@ Records Name                  Id                                   Type
 
 # Documentation
 - [**Powershell Cmdlets**](/IonMod/Cmdlets/PSCmd.md)
-- [**C# Librarry**](/IonMod/Cmdlets/CSCmd.md)
+- [**C# Library**](/IonMod/Cmdlets/CSCmd.md)
 
 # Known issue with `using` keyword when using `IonMod.psd1` from source in Powershell.
 [As mentioned here](https://github.com/jimurrito/PSTest?tab=readme-ov-file#how-to-use-pstest), the `using` keyword will not work with the named module when importing the module from source. Rule of thumb is that if you are using `Import-Module` and the module manifest file `.psd1`, you will also need to use the path when declaring `using` in Powershell.
