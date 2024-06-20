@@ -10,7 +10,7 @@ namespace IonMod
     public static class IonConnect
     {
         private static readonly HttpClient Client = new HttpClient();
-        public static string Rooturi = "https://api.hosting.ionos.com/dns/v1/zones";
+        public static string RootURI = "https://api.hosting.ionos.com/dns/v1/zones";
         private static string ContentType = "application/json";
         private static IonToken? Token;
 
@@ -51,7 +51,7 @@ namespace IonMod
         private static string Request(HttpMethod method, string path = "/", string body = "")
         {
             LoginCheck();
-            HttpRequestMessage request = new(method, Rooturi + path);
+            HttpRequestMessage request = new(method, RootURI + path);
             if (method == HttpMethod.Put || method == HttpMethod.Post)
             {
                 request.Content = new StringContent(body.ToLower(), Encoding.UTF8, ContentType);

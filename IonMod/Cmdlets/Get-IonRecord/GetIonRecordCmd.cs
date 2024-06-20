@@ -2,49 +2,26 @@ using System.Management.Automation;
 
 namespace IonMod
 {
-    /// <summary>
-    /// A Cmdlet that retrieves an IonRecord instance.
-    /// </summary>
-    /// <example>
-    /// This example shows how to use this Cmdlet with a zone ID and a record ID.
-    /// <code>
-    /// Get-IonRecord -ZoneId "zoneId" -RecordId "recordId"
-    /// </code>
-    /// </example>
     [Cmdlet(VerbsCommon.Get, "IonRecord")]
     public class GetIonRecordCmd : PSCmdlet
     {
-        /// <summary>
-        /// The ID of the zone. This parameter is mandatory.
-        /// </summary>
+
         [Parameter(Mandatory = true, ParameterSetName = "stringIds")]
         [Parameter(Mandatory = true, ParameterSetName = "stringId+RecObj")]
         public string ZoneId;
 
-        /// <summary>
-        /// The ID of the record. This parameter is mandatory.
-        /// </summary>
         [Parameter(Mandatory = true, ParameterSetName = "stringIds")]
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+stringId")]
         public string RecordId;
 
-        /// <summary>
-        /// The IonZone instance. This parameter is mandatory and can be piped into this Cmdlet.
-        /// </summary>
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+stringId", ValueFromPipeline = true)]
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj", ValueFromPipeline = true)]
         public IonZone Zone;
 
-        /// <summary>
-        /// The IonRecord instance. This parameter is mandatory.
-        /// </summary>
         [Parameter(Mandatory = true, ParameterSetName = "stringId+RecObj", ValueFromPipeline = true)]
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj")]
         public IonRecord Record;
 
-        /// <summary>
-        /// The logic to retrieve the IonRecord instance.
-        /// </summary>
         protected override void ProcessRecord()
         {
             switch (ParameterSetName)

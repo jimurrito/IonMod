@@ -5,9 +5,9 @@ namespace IonMod
     /// </summary>
     public class IonZone
     {
-        public string Name;
-        public string Id;
-        public string Type;
+        public required string Name;
+        public required string Id;
+        public required string Type;
 
         /// <summary>
         /// Gets or sets the list of DNS records in the zone.

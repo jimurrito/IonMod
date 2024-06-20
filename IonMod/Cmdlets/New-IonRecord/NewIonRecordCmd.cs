@@ -14,29 +14,17 @@ namespace IonMod
     [Cmdlet(VerbsCommon.New, "IonRecord")]
     public class NewIonRecordCmd : PSCmdlet
     {
-        /// <summary>
-        /// Gets or sets the ZoneId. This parameter is mandatory.
-        /// </summary>
         [Parameter(Mandatory = true, ParameterSetName = "stringId+RecObj")]
         public string ZoneId;
 
-        /// <summary>
-        /// Gets or sets the Zone. This parameter is mandatory and can be piped.
-        /// </summary>
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj", ValueFromPipeline = true)]
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj", ValueFromPipeline = true)]
         public IonZone Zone;
 
-        /// <summary>
-        /// Gets or sets the Records. This parameter is mandatory and can be piped.
-        /// </summary>
         [Parameter(Mandatory = true, ParameterSetName = "stringId+RecObj", ValueFromPipeline = true)]
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj")]
-        public List<IonRecord> Records; 
+        public List<IonRecord> Records;
 
-        /// <summary>
-        /// The ProcessRecord method is overridden to provide record processing functionality for the cmdlet.
-        /// </summary>
         protected override void ProcessRecord()
         {
             switch (ParameterSetName)
