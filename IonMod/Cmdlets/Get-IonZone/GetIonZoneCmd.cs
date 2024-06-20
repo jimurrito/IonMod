@@ -31,7 +31,7 @@ namespace IonMod
         /// This command gets the zone with the ID 12345.
         /// </example>
         [Parameter(ValueFromPipeline = true)]
-        public string ZoneId { get; set; }
+        public string ZoneId 
 
         /// <summary>
         /// The Zone object to retrieve. This parameter can be piped into this cmdlet.
@@ -46,7 +46,7 @@ namespace IonMod
         /// This command gets the zone using a Zone object.
         /// </example>
         [Parameter(ValueFromPipeline = true)]
-        public IonZone Zone { get; set; }
+        public IonZone Zone 
 
         /// <summary>
         /// This method is called once for each cmdlet in the pipeline when the pipeline starts executing.

@@ -3,14 +3,18 @@ using System.Management.Automation;
 namespace IonMod
 {
     /// <summary>
-    /// A Cmdlet that connects to IONOS using a public prefix and a secret.
+    /// Connects to IONOS using the public prefix and a secret provided by IONOS.
     /// </summary>
     /// <example>
-    /// This example shows how to use this Cmdlet with a public prefix and a secret.
     /// <code>
     /// Connect-Ion -PublicPrefix "publicPrefix" -Secret "secret"
     /// </code>
     /// </example>
+    /// <remarks>
+    /// This cmdlet is required to interact with the rest of the SDK
+    /// </remarks>
+
+
     [Cmdlet(VerbsCommunications.Connect, "Ion")]
     public class ConnectIonCmd : PSCmdlet
     {
@@ -18,13 +22,13 @@ namespace IonMod
         /// The public prefix. This parameter is mandatory and can be piped into this Cmdlet.
         /// </summary>
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
-        public string PublicPrefix { get; set; }
+        public string PublicPrefix;
 
         /// <summary>
         /// The secret. This parameter is mandatory and can be piped into this Cmdlet.
         /// </summary>
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
-        public string Secret { get; set; }
+        public string Secret;
 
         /// <summary>
         /// The logic to connect to IONOS.

@@ -19,28 +19,28 @@ namespace IonMod
         /// </summary>
         [Parameter(Mandatory = true, ParameterSetName = "stringIds")]
         [Parameter(Mandatory = true, ParameterSetName = "stringId+RecObj")]
-        public string ZoneId { get; set; }
+        public string ZoneId;
 
         /// <summary>
         /// The ID of the record. This parameter is mandatory.
         /// </summary>
         [Parameter(Mandatory = true, ParameterSetName = "stringIds")]
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+stringId")]
-        public string RecordId { get; set; }
+        public string RecordId;
 
         /// <summary>
         /// The IonZone instance. This parameter is mandatory and can be piped into this Cmdlet.
         /// </summary>
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+stringId", ValueFromPipeline = true)]
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj", ValueFromPipeline = true)]
-        public IonZone Zone { get; set; }
+        public IonZone Zone;
 
         /// <summary>
         /// The IonRecord instance. This parameter is mandatory.
         /// </summary>
         [Parameter(Mandatory = true, ParameterSetName = "stringId+RecObj", ValueFromPipeline = true)]
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj")]
-        public IonRecord Record { get; set; }
+        public IonRecord Record;
 
         /// <summary>
         /// The logic to retrieve the IonRecord instance.

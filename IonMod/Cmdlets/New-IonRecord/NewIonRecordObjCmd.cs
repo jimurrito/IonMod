@@ -19,51 +19,51 @@ namespace IonMod
         /// </summary>
         [Parameter(Mandatory = true, ParameterSetName = "default")]
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+Str")]
-        public string Name { get; set; }
+        public string Name;
 
         /// <summary>
         /// Gets or sets the ZoneName. This parameter is mandatory.
         /// </summary>
         [Parameter(Mandatory = true, ParameterSetName = "default")]
-        public string ZoneName { get; set; }
+        public string ZoneName;
 
         /// <summary>
         /// Gets or sets the Zone. This parameter is mandatory and can be piped.
         /// </summary>
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+Str", ValueFromPipeline = true)]
-        public IonZone Zone { get; set; }
+        public IonZone Zone;
 
         /// <summary>
         /// Gets or sets the Type. This parameter is mandatory.
         /// </summary>
         [Parameter(Mandatory = true, ParameterSetName = "default")]
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+Str")]
-        public string Type { get; set; }
+        public string Type; 
 
         /// <summary>
         /// Gets or sets the Content. This parameter is mandatory.
         /// </summary>
         [Parameter(Mandatory = true, ParameterSetName = "default")]
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+Str")]
-        public string Content { get; set; }
+        public string Content; 
 
         /// <summary>
         /// Gets or sets the ChangeDate. This parameter is optional.
         /// </summary>
         [Parameter()]
-        public string ChangeDate { get; set; } = "";
+        public string ChangeDate  = "";
 
         /// <summary>
         /// Gets or sets the TTL. This parameter is optional.
         /// </summary>
         [Parameter()]
-        public string TTL { get; set; } = "3600";
+        public string TTL  = "3600";
 
         /// <summary>
         /// Gets or sets the Disabled. This parameter is optional.
         /// </summary>
         [Parameter()]
-        public bool Disabled { get; set; } = false;
+        public bool Disabled  = false;
 
         /// <summary>
         /// The ProcessRecord method is overridden to provide record processing functionality for the cmdlet.

@@ -21,21 +21,21 @@ namespace IonMod
         /// <para type="description">The ID of the zone.</para>
         /// </summary>
         [Parameter(Mandatory = true, ParameterSetName = "stringId+RecObj")]
-        public string ZoneId { get; set; }
+        public string ZoneId;
 
         /// <summary>
         /// <para type="description">The IonZone object containing the ID of the zone and the list of records to be set.</para>
         /// </summary>
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj", ValueFromPipeline = true)]
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj", ValueFromPipeline = true)]
-        public IonZone Zone { get; set; }
+        public IonZone Zone; 
 
         /// <summary>
         /// <para type="description">The list of IonRecord objects to be set for the zone.</para>
         /// </summary>
         [Parameter(Mandatory = true, ParameterSetName = "stringId+RecObj", ValueFromPipeline = true)]
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj")]
-        public List<IonRecord> Records { get; set; }
+        public List<IonRecord> Records; 
 
         /// <summary>
         /// The ProcessRecord method is called once for each input record.

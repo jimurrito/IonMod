@@ -7,7 +7,7 @@ This library is for C# and Powershell use.
 
 # Getting started
 
-- **PowerShell Gallery/Nuget**
+- [**PowerShell Gallery/Nuget**](https://www.powershellgallery.com/packages/IonMod)
   - `install-module IonMod`
 
 - **Git**
@@ -32,211 +32,189 @@ Records Name                  Id                                   Type
         whatdoesthefedsay.com 00000000-0000-0000-0000-000000000000 NATIVE
 ```
 
-# Function List
+# Cmdlet List
 
-### `Connect-Ion`
-#### Description
+- [`Connect-Ion`](#connect-ion)
+- [`Get-IonZone`](#get-ionzone)
+- [`Get-IonRecord`](#get-ionrecord)
+- [`New-IonRecord`](#new-ionrecord)
+- [`New-IonRecordObj`](#new-ionrecordobj)
+- [`Remove-IonRecord`](#remove-ionrecord)
+- [`Set-IonZone`](#set-ionzone)
+- [`Set-IonRecord`](#set-ionrecord)
+
+
+# Cmdlet Descriptions
+Help descriptions for each cmdlet. Running `Get-Help <cmdlet>` in Powershell should yield the same result. Documentation on the C# library should be similar to this. Both support being used with a linter.
+
+<br><br>
+
+## `Connect-Ion`
+### Description
 Combines the Public-prefix and Secret provided by IONOS for access to the API.
-#### Parameters
-| Parameters | Description | Default |
-| --- | --- | --- |
-| `-PublicPrefix` | Public-Prefix provided by IONOS
-| `-Secret` | Secret provided by IONOS
-#### Examples
-Stores the credentials in a static class.
+### Parameters
+| Parameters      | Type   | Description                      | Mandatory | Piped |
+| --------------- | ------ | -------------------------------- | --------- | ----- |
+| `-PublicPrefix` | String | Public-Prefix provided by IONOS. | Yes       | No    |
+| `-Secret`       | string | Secret provided by IONOS.        | Yes       | No    |
+### Examples
+Stores the credentials in a static class. This is required to do any other cmdlets.
 ```PowerShell
 Connect-Ion -PublicPrefix "XXXX" -Secret "XXXX"
 ```
----
+<br><br>
 
-
-### `Get-IonZone`
-#### Description
-Grabs information of either all zones, or a specific zone when using the -ZoneId parameter.
-#### Parameters
-| Parameters | Description | Default |
-| --- | --- | --- |
-| `-Token` | Combination of the public prefix and secret provided by IONOS for API access. You can use 
-| `-ZoneId` | Specifies which IONOS Zone will be used. Use `Get-IonZone` to retrieve the IDs. When provided, the query provides indepth information over the entire Zone. Information like DNS records can be retrieved for the zone.
-#### Examples
+## `Get-IonZone`
+### Description
+Grabs information of either all zones, or a specific zone depending on the arguments given.
+### Parameters
+| Parameters | Type    | Description                                                                 | Mandatory | Piped |
+| ---------- | ------- | --------------------------------------------------------------------------- | --------- | ----- |
+| `-ZoneId`  | String  | Id attached to the DNS Zone.                                                | No        | Yes   |
+| `-Zone`    | IonZone | Class object that represents a DNS Zone. Can be used in place of `-ZoneId`. | No        | Yes   |
+### Examples
 Get all Zones accessible by the API Credentials.
 ```PowerShell
 Get-IonZone
 ```
-
 Get all Records for an IONOS Zone.
 ```PowerShell
 $Zone = Get-IonZone -ZoneId "XXXX"
 $Zone.Records
 ```
----
+<br><br>
 
-
-### `Set-IonZone`
-#### Description
-Sets configurations for a given Zone. Manifest provided will be set as the current configuration, discarding the previous one. This includes DNS Zones.
-#### Parameters
-| Parameters | Description | Default |
-| --- | --- | --- |
-| `-Token` | Combination of the public prefix and secret provided by IONOS for API access. You can use 
-| `-ZoneId` | Specifies which IONOS Zone will be used. Use `Get-IonZone` to retrieve the IDs. When provided, the query provides indepth information over the entire Zone. Information like DNS records can be retrieved for the zone.
-| `-Body` | The Zone configuration that will be set. Can be either a **[*]** Json String or PSCustomObject.
-
-#### Examples
-Set Zone DNS Configuration.
-```PowerShell
-Set-IonZone -ZoneId "XXXX" -Body <[JSON | PSObject]>
-```
----
-
-
-### `Get-IonRecord`
-
-#### Description
-
+## `Get-IonRecord`
+### Description
 Grabs all DNS Records for a provided Zone. This is the same as `(Get-IonZone -ZoneId "XXXX").Records`.
-
-#### Parameters
-
-| Parameters | Description | Default |
-| --- | --- | --- |
-| `-Token` | Combination of the public prefix and secret provided by IONOS for API access. You can use 
-| `-ZoneId` | Specifies which IONOS Zone will be used. Use `Get-IonZone` to retrieve the IDs.
-| `-RecordId` | Specifies which record, within a Zone, will be used.
-| `-Types` | Specifies the type of record that should be returned. Ex: A, AAAA, TXT, MX ... | "A"
-
-#### Examples
-
+### Parameters
+| Parameters  | Type      | Description                                                                    | Mandatory | Piped |
+| ----------- | --------- | ------------------------------------------------------------------------------ | --------- | ----- |
+| `-ZoneId`   | String    | The id attached to the DNS Zone.                                               | Yes       | No    |
+| `-Zone`     | IonZone   | Class object that represents a DNS Zone. Can be used in place of `-ZoneId`.    | No        | Yes   |
+| `-RecordId` | String    | The id attached to the DNS Record.                                             | Yes       | No    |
+| `-Record`   | IonRecord | Class object that represents a DNS Record. Can be used instead of `-RecordId`. | No        | Yes   |
+### Examples
 Get all Records in a Zone.
 ```PowerShell
 Get-IonRecord -ZoneId "XXXX"
+# or
+Get-IonRecord -Zone <[IonZone]>
 ```
-
 Get a specific record based on RecordId
 ```PowerShell
 Get-IonRecord -ZoneId "XXXX" -RecordId "XXXX"
+# or
+Get-IonRecord -Zone <[IonZone]> -Record <[IonRecord]>
 ```
+<br><br>
 
-Return all 'A' records for a given Zone.
-```PowerShell
-Get-IonRecord -ZoneId "XXXX" -Types "A"
-```
----
-
-
-### `Set-IonRecord`
-#### Description
-Uses the provided ZoneId and RecordId to change the configuration of a single Zone Record.
-#### Parameters
-| Parameters | Description | Default |
-| --- | --- | --- |
-| `-Token` | Combination of the public prefix and secret provided by IONOS for API access. You can use 
-| `-ZoneId` | Specifies which IONOS Zone will be used. Use `Get-IonZone` to retrieve the IDs.
-| `-RecordId` | Specifies which record, within a Zone, will be used.
-| `-Body` | PSObject or JSON String of your desired configuration.
-#### Examples
-Sets configuration for a Zone Record.
-```PowerShell
-
-Set-IonRecord  -ZoneId "XXXX" -RecordId "XXXX"  -Body <[JSON | PSObject]>
-```
----
-
-
-### `Remove-IonRecord`
-#### Description
-Removes a Record from an IONOS Zone.
-#### Parameters
-| Parameters | Description | Default |
-| --- | --- | --- |
-| `-Token` | Combination of the public prefix and secret provided by IONOS for API access. You can use 
-| `-ZoneId` | Specifies which IONOS Zone will be used. Use `Get-IonZone` to retrieve the IDs.
-| `-RecordId` | Specifies which record, within a Zone, 
-#### Examples
-Removes an A Record from a Zone.
-```PowerShell
-Remove-IonRecord  -ZoneId "XXXX" -RecordId "XXXX"  -Body <[JSON | PSObject]>
-```
----
-
-
-### `New-IonRecord`
-#### Description
+## `New-IonRecord`
+### Description
 Creates a new Record in an IONOS Zone.
-#### Parameters
-| Parameters | Description | Default |
-| --- | --- | --- |
-| `-Token` | Combination of the public prefix and secret provided by IONOS for API access. You can use 
-| `-ZoneId` | Specifies which IONOS Zone will be used. Use `Get-IonZone` to retrieve the IDs.
-| `-RecordId` | Specifies which record, within a Zone, will be used.
-| `-Body` | PSObject or JSON String of your desired configuration. Body can be generated using `New-IonRecordObj`. This creates a JSON object that is ready to be pushed to IONOS.
-#### Examples
+### Parameters
+| Parameters | Type        | Description                                                                 | Mandatory | Piped |
+| ---------- | ----------- | --------------------------------------------------------------------------- | --------- | ----- |
+| `-ZoneId`  | String      | The id attached to the DNS Zone.                                            | Yes       | No    |
+| `-Zone`    | IonZone     | Class object that represents a DNS Zone. Can be used in place of `-ZoneId`. | No        | Yes   |
+| `-Records` | IonRecord[] | Array of IonRecord Objects.                                                 | Yes       | Yes   |
+### Examples
 ```PowerShell
-
-New-IonRecord  -ZoneId "XXXX" -RecordId "XXXX"  -Body <[JSON | (New-IonRecordObj)]>
+New-IonRecord  -ZoneId "XXXX" -Records <[IonRecords[]]>
+# or
+$Zone | New-IonRecord -Records <[IonRecords[]]>
 ```
----
+<br><br>
 
-
-### `New-IonRecordObj`
-#### Description
+## `New-IonRecordObj`
+### Description
 Creates a new Record Object, ready to be sent to IONOS.
-#### Parameters
-| Parameters | Description | Default |
-| --- | --- | --- |
-| `-ZoneName` | Name of the Zone the Record will be held under. Ex. Contoso.com
-| `-Name` | Name of the Record. This needs to be an FQDN. Ex. app.Contoso.com
-| `-Type` | Type of Record to be Created. Ex. A, AAAA, TXT, MX. Defaults to 'A'.
-| `-Content` | Value of the record. Ex. 192.168.2.7
-| `-TTL` | Time-to-live value for the Record. | `3600`
-| `-Prio` | Priority value for the Record. | `0`
-| `-Disabled` | Disables the Record. | Records are Enabled by default.
+### Parameters
+| Parameters    | Type    | Description                                                                 | Mandatory | Piped |
+| ------------- | ------- | --------------------------------------------------------------------------- | --------- | ----- |
+| `-Name`       | String  | Name of the Record. This needs to be an FQDN. `Ex. app.Contoso.com`         | Yes       | No    |
+| `-ZoneName`   | String  | Name of the DNS Zone. `Ex. Contoso.com `                                    | Yes       | no    |
+| `-Zone`       | IonZone | Class object that represents a DNS Zone. Can be used in place of `-ZoneId`. | No        | Yes   |
+| `-Type`       | String  | Type of DNS record to be set. `Ex. A/AAAA/NS/MX/...`                        | Yes       | No    |
+| `-Content`    | String  | Content of the DNS record.                                                  | Yes       | no    |
+| `-ChangeDate` | String  | Last change of this record. This property is set from IONOS side.           | No        | No    |
+| `-TTL`        | String  | The TTL amount for the record.                                              | No        | no    |
+| `-Disabled`   | bool    | Should the record be enabled on the Zone.                                   | No        | No    |
+
 #### Examples
 Creates a new A Record for App.Contoso.com
 ```PowerShell
-New-IonRecordObj -ZoneName "Contoso.com" -Name "App.Contoso.com" -Content 192.168.2.7
+New-IonRecordObj -Name "App.Contoso.com" -ZoneName "Contoso.com" -Type "A" -Content 192.168.2.7
+# or
+$ZoneObj | New-IonRecordObj -Name "App.Contoso.com" -Type "A" -Content 192.168.2.7
 ```
----
+<br><br>
 
-
-### `Invoke-IonRequest`
-#### Description
-Generic Function used to send HTTP(s) requests to the IONOS developer API. Requires a Token PSObject to connect.
-#### Parameters
-| Parameter | Description | Default |
-| --- | --- | --- |
-| `-Token` | Combination of the public prefix and secret provided by IONOS for API access. You can use `New-IonToken` to generate this PSObject. |
-| `-Path` | Directory path of an API endpoint. Path is appended to the root url (`$ROOTURL`) | `$PWD`
-| `-Body `| Body of the HTTP(s) request, that will be sent to IONOS. Only Supported by certain HTTP Methods. |
-| `-Method` | HTTP Method used to connect to IONOS. | `'Get'`
-#### Examples
-Get all Zones accessible by the API Credentials.
+## `Remove-IonRecord`
+### Description
+Removes a Record from an IONOS Zone.
+### Parameters
+| Parameters  | Type      | Description                                                                    | Mandatory | Piped |
+| ----------- | --------- | ------------------------------------------------------------------------------ | --------- | ----- |
+| `-ZoneId`   | String    | The id attached to the DNS Zone.                                               | Yes       | No    |
+| `-Zone`     | IonZone   | Class object that represents a DNS Zone. Can be used in place of `-ZoneId`.    | No        | Yes   |
+| `-RecordId` | String    | The id attached to the DNS Record.                                             | Yes       | No    |
+| `-Record`   | IonRecord | Class object that represents a DNS Record. Can be used instead of `-RecordId`. | No        | Yes   |
+### Examples
+Removes an A Record from a Zone.
 ```PowerShell
-
-Invoke-IonRequest -Path "/zones" -Token $Token
+Remove-IonRecord  -ZoneId "XXXX" -RecordId "XXXX"
+# or
+$RecordObj | Remove-IonRecord -ZoneId "XXXX"
+# or
+$ZoneObj | Remove-IonRecord -Record $RecordObj
 ```
-Update the information of a DNS Record
+<br><br>
+
+## `Set-IonZone`
+### Description
+Sets configurations for a given Zone. Manifest provided will be set as the current configuration, discarding the previous one. This includes DNS Zones.
+### Parameters
+| Parameters | Type        | Description                                                                 | Mandatory | Piped |
+| ---------- | ----------- | --------------------------------------------------------------------------- | --------- | ----- |
+| `-ZoneId`  | String      | The id attached to the DNS Zone.                                            | Yes       | No    |
+| `-Zone`    | IonZone     | Class object that represents a DNS Zone. Can be used in place of `-ZoneId`. | No        | Yes   |
+| `-Records` | IonRecord[] | Array of IonRecord Objects.                                                 | Yes       | Yes   |
+### Examples
+Set Zone DNS Configuration.
 ```PowerShell
-
-$ZoneId = "XXXX"
-$RecordId = "XXXX"
-$Body = [json]|[PSObject]
-Invoke-IonRequest -Method Put -Path "/zones/$ZoneId/records/$RecordId" -Body $Body -Token $Token
+Set-IonZone -ZoneId "XXXX" -Records $RecordObjList
+# or
+$ZoneObj | Set-IonZone -Records $RecordObjList
+# or
+$RecordObjList | Set-IonZone -Zone $ZoneObj
 ```
----
+> **Important Note**
+> 
+> This will set the configuration of ALL records in a DNS Zone. The list of records pushed will be the new set of records. If you wish to add and remove individual Records, please use `New-IonRecord` or `Remove-IonRecord` respectively. If you post an empty list to this cmdlet, all DNS records on the Zone will be lost.
+> <u>**Use at your own risk!**</u>
 
+<br><br>
 
-### `ConvertTo-JsonList`
-#### Description
-By default, Powershell will coerce single item lists into single items not within a list. Any single item list you input into ConvertTo-Json will be converted to a single JSON object. This function catches this scenario, and wraps the single JSON object into a JSON list. This is required as some IONOS endpoints only accept JSON List bodies.
-#### Parameters
-| Parameters | Description | Default |
-| --- | --- | --- |
-| `-Object` | Input Object that will be converted. Should be a Powershell Object.
-#### Examples
-Removes a Record from a Zone.
+## `Set-IonRecord`
+### Description
+Uses the provided ZoneId and RecordId to change the configuration of a single Zone Record.
+### Parameters
+| Parameters | Type      | Description                                                                 | Mandatory | Piped |
+| ---------- | --------- | --------------------------------------------------------------------------- | --------- | ----- |
+| `-ZoneId`  | String    | The id attached to the DNS Zone.                                            | Yes       | No    |
+| `-Zone`    | IonZone   | Class object that represents a DNS Zone. Can be used in place of `-ZoneId`. | No        | Yes   |
+| `-Record`  | IonRecord | Class object that represents a DNS Record.                                  | Yes       | Yes   |
+### Examples
+Sets configuration for a Zone Record.
 ```PowerShell
-$Rec = New-IonRecordObj -ZoneName "Contoso.com" -Name "App.Contoso.com" -Content 192.168.2.7
-$Rec | ConvertTo-JsonList
+Set-IonRecord -ZoneId "XXXX" -Record $RecordObj
+# or
+$RecordObj | Set-IonRecord -ZoneId "XXXX"
+# or
+$ZoneObj | Set-IonRecord -Record $RecordObj
 ```
----
+<br><br>
+
+# Any issues?
+Please open an issue on this repo!

@@ -19,28 +19,28 @@ namespace IonMod
         /// </summary>
         [Parameter(Mandatory = true, ParameterSetName = "stringIds")]
         [Parameter(Mandatory = true, ParameterSetName = "stringId+RecObj")]
-        public string ZoneId { get; set; }
+        public string ZoneId;
 
         /// <summary>
         /// Gets or sets the RecordId parameter. This parameter is required.
         /// </summary>
         [Parameter(Mandatory = true, ParameterSetName = "stringIds")]
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+stringId")]
-        public string RecordId { get; set; }
+        public string RecordId; 
 
         /// <summary>
         /// Gets or sets the Zone object. This parameter is required and can be piped to the cmdlet.
         /// </summary>
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+stringId", ValueFromPipeline = true)]
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj", ValueFromPipeline = true)]
-        public IonZone Zone { get; set; }
+        public IonZone Zone;
 
         /// <summary>
         /// Gets or sets the Record object. This parameter is required and can be piped to the cmdlet.
         /// </summary>
         [Parameter(Mandatory = true, ParameterSetName = "stringId+RecObj", ValueFromPipeline = true)]
         [Parameter(Mandatory = true, ParameterSetName = "ZoneObj+RecObj")]
-        public IonRecord Record { get; set; }
+        public IonRecord Record; 
 
         /// <summary>
         /// The ProcessRecord method overrides the base method to remove a DNS record from a zone.
