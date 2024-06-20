@@ -14,7 +14,6 @@ This library is for C# and Powershell use.
   - `git clone https://github.com/jimurrito/IonMod`
   - `import-module path/to/IonMod.psd1`
 
-<br>
 
 # Example
 
@@ -32,13 +31,10 @@ Records Name                  Id                                   Type
         favicon.com           00000000-0000-0000-0000-000000000000 NATIVE
         whatdoesthefedsay.com 00000000-0000-0000-0000-000000000000 NATIVE
 ```
-<br>
 
 # Documentation
 - [**Powershell Cmdlets**](/IonMod/Cmdlets/PSCmd.md)
 - [**C# Librarry**](/IonMod/Cmdlets/CSCmd.md)
-
-<br>
 
 # Known issue with `using` keyword when using `IonMod.psd1` from source in Powershell.
 [As mentioned here](https://github.com/jimurrito/PSTest?tab=readme-ov-file#how-to-use-pstest), the `using` keyword will not work with the named module when importing the module from source. Rule of thumb is that if you are using `Import-Module` and the module manifest file `.psd1`, you will also need to use the path when declaring `using` in Powershell.
