@@ -10,21 +10,21 @@ using IonMod;
 
 # Resource Class List
 These classes are either inputs or outputs from the Static Command Classes.
-- `IonZone`
-- `IonRecord`
-- `IonToken`
+- [`IonZone`](#ionzone)
+- [`IonRecord`](#ionrecord)
+- [`IonToken`](#iontoken)
 
 <br>
 
 # Static Command Class List
 Each one represents an IONOS Rest API endpoint. With `IonConnect` being the exception, all the Static Command Classes can be invoked by `<Static_Cmd_Class>.Run(...)`.
-- `IonConnect`
-- `GetIonZone`
-- `GetIonRecord`
-- `NewIonRecord`
-- `RmIonRecord`
-- `SetIonZone`
-- `SetIonRecord`
+- [`IonConnect`](#ionconnect)
+- [`GetIonZone`](#getionzone)
+- [`GetIonRecord`](#getionrecord)
+- [`NewIonRecord`](#newionrecord)
+- [`RmIonRecord`](#rmionrecord)
+- [`SetIonZone`](#setionzone)
+- [`SetIonRecord`](#setionrecord)
 
 <br>
 
